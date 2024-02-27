@@ -1,4 +1,4 @@
-% !TeX spellcheck = ru_RU-Russian
+% !TeX spellcheck = russian-aot
 \documentclass[a4paper, fontsize=14pt]{article} 
 \usepackage{course_work}
 \addbibresource{report.bib}
@@ -10,13 +10,13 @@
 \newcommand{\divop}{\operatorname{div}}
 \newcommand{\gradop}{\operatorname{grad}}
 \begin{document} 
-	\includepdf[pages=1-3]{cover.pdf} \newpage \tableofcontents
-	\newpage 
-	\section*{Введение} 
-	\addcontentsline{toc}{section}{Введение}
+	%\includepdf[pages=1-3]{cover.pdf} \newpage \tableofcontents
+	%\newpage 
+	%\section*{Введение} 
+	%\addcontentsline{toc}{section}{Введение}
 	
 	
-	\newpage 
+	%\newpage 
 	\section{Постановка задачи} 
 	\begin{figure}[h]
 		
@@ -30,7 +30,7 @@
 	наблюдения.
 	Допустим задана поверхность, ограничивающая некоторую область пространства
 	$D=[0,X]\times [0,Y]\times [0,Z]$, изображённую на рисунке \ref{fig:mig}.
-	Область пространства $D$ разделена на слои $D_1$ и $D_2$, с постоянной
+	Область пространства $D$ разделена на слои $D_1$ и $D_2$ границей $B$, с постоянной
 	скоростью звука $c_1$ и $c_2$ соответственно.
 	На границе находятся точечные источники колебаний $S$, которые возбуждают
 	акустическую волну.
@@ -108,7 +108,7 @@
 	\end{equation}
 где $r = \sqrt{x^2+y^2+z^2}$.
 
-Первое слагаемое выражения \ref{eq:canonsol}  описывает сферическую волну, распространяющуюся от начала координат в бесконечность., а второе слагаемое -- сферическую волну из бесконечности к началу координат. Поскольку, по условиям задачи, источником колебания является единственный источник, то функцию $g$ примем равной нулю.  Чтобы найти функцию  $f$  подставим решение \ref{eq:canonsol} в уравнение \ref{eq:wav}. 
+Первое слагаемое выражения \ref{eq:canonsol} описывает сферическую волну, которая распространяется от начала координат в бесконечность, а второе слагаемое -- сферическую волну из бесконечности к началу координат. Поскольку, по условиям задачи, источником колебания является единственный источник, то функцию $g$ примем равной нулю.  Чтобы найти функцию  $f$  подставим решение \ref{eq:canonsol} в уравнение \ref{eq:wav}. 
 \begin{equation}
 	\Delta \left[ \frac{1}{r}f\left(t-\frac{r}{c}\right) \right] - \frac{1}{c^2} \frac{\partial^2 }{\partial
 		t^2}\left[ \frac{1}{r}f\left(t-\frac{r}{c}\right) \right]  = - \delta(t)\delta(x)\delta(y)\delta(z)
@@ -140,9 +140,8 @@
 	возмущением,
 	которое произошло в точке $\bar{r}$ в более ранний момент времени $t$.
 
-	%TODO: \textbf{TODO} написать вывод функции Грина
 	
-% Связь излучаемого и отраженного волнового поля через коэффициент отражения
+% TODO Связь излучаемого и отраженного волнового поля через коэффициент отражения
 
 	\section{Формула Кирхгофа}
 	Для вычисления значения отражённого волнового поля на поверхности наблюдения необходимо 
@@ -185,6 +184,7 @@
 	\end{eqnarray}	
 	тогда 
 	% TODO  Ввести вектора r и r'
+	% TODO ввести обозначения для случаев, где функция без аргументов
 \begin{eqnarray}
 	\Delta u =& \frac{1}{c^2} \diff[]{P}{t},\label{eq:subsdu}\\
 	\Delta v = &\delta (r' - r) \delta(t' - t) + \frac{1}{c^2} \diff [2]{G(r' -r,t'-t)}{t}.\label{eq:subsdv}
@@ -220,13 +220,36 @@
 	формула Кирхгофа показывает, как можно восстановить волновое поле внутри области,
 	ограниченной некоторой поверхностью, по значениям этого поля (и его нормальной
 	производной) на границе области.
-	% 
-	%TODO:	\textbf{TODO} написать вывод интеграла кирхгофа
 	
+	%TODO написать про квазилинейное приближение? 
+	\section{Отражённое волновое поле}
+	Рассмотрим область пространства $D_1$, ограниченную снизу отражающей поверхностью $B$. 
+	Так как волновое поле, созданное источником, испытывает отражение на границе, то отражённое поле можно приблизительно описать при помощи коэффициента отражения\cite{zhdanov2007}
+	\begin{eqnarray}
+		P_1(r,t') = \Lambda(r) P_0(r,t'),\\
+		\diff{P_1(r,t') }{n} = - \Lambda(r) \diff{P_0(r,t')}{n}.
+	\end{eqnarray}
 	
+	Если подставить в выражение \ref{eq:kir} функцию Грина \ref{eq:green3d} в явном виде и проинтегрировать по времени, то получится \cite{magisters}
+	\begin{align}
+		P(r',t') =& \frac{1}{4\pi} \iint_B	\left[ \frac{1}{c|r'-r|}\partial_n|r'-r|\frac{\partial \tilde{P}(r,t')}{\partial t'} \right.\nonumber \\
+		&\left. - \partial_n
+		 \left(\frac{1}{|r'-r|}\right)\tilde{P}(r,t') +\frac{1}{|r'-r|}\partial_n \tilde{P}(r,t')\right]\,ds
+		 \label{eq:kirgreen3d}
+	\end{align}
+	где $\tilde{P}(r,t) = P\left(r,t - \frac{|r'-r|}{c}\right)$ -- волна запаздывания.
 	
-	
-	
+	\section{Отражение от горизонтальной плоской границы}
+		Пусть поверхность $B$ является горизонтальной плоскостью, внешняя нормаль которой направлена вдоль оси $Oz$, то есть $\partial_n = \partial_z$. Тогда можно аналитически вычислить значение нормальных производных
+		\begin{eqnarray}
+			\partial_n|r'-r| =& \frac{z' - z}{|r' - r|}, \\ 
+			\partial_n\left(\frac{1}{|r'-r|}\right) =& -  \frac{z' - z}{|r' - r|^3}.
+		\end{eqnarray} 
+		Подставим значения производных в выражение \ref{eq:kirgreen3d}
+		\begin{equation}
+			P(r',t') = \frac{1}{4\pi} \iint\limits_B
+			\left[\frac{z'-z}{|r'-r|^2}\left(\frac{1}{c}\frac{\partial\tilde{P}(r',t')}{\partial t'}+\frac{\tilde{P}(r',t')}{|r'-r|}\right) - \frac{1}{|r'-r|}\frac{\partial\tilde{P}(r',t')}{\partial z}\right]\,ds
+		\end{equation}
 	\clearpage
 	
 	
@@ -240,7 +263,7 @@
 	
 	\newpage
 	
-	\includepdf[pages=11]{cover.pdf}
+	%\includepdf[pages=11]{cover.pdf}
 	
 \end{document}
 
