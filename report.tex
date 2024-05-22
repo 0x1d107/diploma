@@ -19,33 +19,45 @@
 	\newpage
 	\section*{Введение} 
 	\addcontentsline{toc}{section}{Введение}
-	\begin{comment}
+	
 	Проведение геологоразведочных мероприятий позволяет определять структуру
 	и состав грунта, что, в свою очередь, позволяет обнаруживать новые
 	месторождения полезных ископаемых, а также делать заключения о
 	целесообразности разработки того или иного месторождения.
-	Одним из наиболее используемых, эффективных и надежных методов,
+	Одним из наиболее используемых, эффективных и надёжных методов,
 	применяемых в геологоразведке, является сейсморазведка, совмещающая в себе
-	относительно невысокую стоимость и высокую точность получаемых данных.
-
-	Актуальность применения быстрых методов решения прямых и обратных механических задач обусловлена необходимостью постоянного совершенствования методов геофизического исследования и повышения эффективности разведки нефтегазовых месторождений. Сейсмическое моделирование и миграция являются неотъемлемыми компонентами процесса интерпретации сейсмических данных и предоставляют ценную информацию о структуре и свойствах залежей. В свете постоянно меняющихся условий в нефтегазовой промышленности, эти методы становятся все более важными для обеспечения точности и достоверности геологической информации.
-	\end{comment}
+	относительно невысокую стоимость и высокую точность получаемых данных.  
+	В ходе обработки данных, полученных в результате сейсмической разведки, 
+	возникает необходимость решения прямой и обратной механической задач.
+	
+	Актуальность применения быстрых методов решения прямых и обратных задач сейсмической разведки обусловлена необходимостью постоянного совершенствования методов геофизического исследования и повышения эффективности разведки нефтегазовых месторождений. Сейсмическое моделирование и миграция являются неотъемлемыми компонентами процесса интерпретации сейсмических данных и предоставляют ценную информацию о структуре и свойствах залежей. В свете постоянно меняющихся условий в нефтегазовой промышленности, эти методы становятся все более важными для обеспечения точности и достоверности геологической информации.
+	
 	Определения некоторых терминов, использующихся в данной работе:
-	
-	Сейсмическое моделирование -- это ...
-	
-	Сейсмическая миграция -- это ...
-	
-	Функция Грина -- ...
-	
-%	Сейсмотрасса -- ...
+	\begin{itemize}
+		\item Сейсморазведка –- это один из геофизических методов, который преследует задачу
+		получения изображения геологической среды с помощью дистанционных методов. 
+		
+		\item Прямая задача сейсморазведки (сейсмическое моделирование) –- это поиск того, как будет выглядеть 
+		искомое физическое поле при заданных параметрах среды. При решении прямой задачи 
+		задается известная модель среды с определёнными параметрами и решается задача
+		моделирование – на выходе получается сейсмограмма.
+		
+		\item Обратная задача сейсморазведки (сейсмическая миграция) заключается в определении сейсмического изображения среды по
+		наблюдаемому волновому полю (сейсмограммам). Эта задача решается неоднозначно,
+		поскольку для одного и того же поля можно получить сразу несколько моделей среды.
+		
+		\item Сейсмическое изображение среды --  значения поля 	отражённых и дифрагированных волн непосредственно в момент их образования на отражающих границах и локальных неоднородностях	разреза \cite{timoshin}.
+		
+		\item Сейсмограмма -- это совокупность значений поля отражённых волн, зарегистрированных на земной поверхности.   
+	\end{itemize}
+
 	
 	Целью данной работы является разработка численных алгоритмов интегральных методов решения задач сейсмического моделирования и миграции. 
 	
 	Для достижения поставленной цели необходимо решить следующие задачи:
 	\begin{enumerate}
 		\item Вывести формулу решения задачи сейсмического моделирования в интегральном виде.
-		\item Вывести формулу сейсмической миграции.
+		\item Вывести формулу решения задачи сейсмической миграции.
 		\item Выполнить программную реализацию алгоритмов интегрального метода решения задач моделирования и миграции.
 		\item Провести серию вычислительных экспериментов для решения задачи на конкретном наборе данных.
 	\end{enumerate}
@@ -54,44 +66,48 @@
 	\newpage
 	\section{Моделирование} 
 	\subsection{Постановка задачи сейсмического моделирования} 
+
+	Рассмотрим задачу нахождения значения скалярного волнового поля на поверхности
+	наблюдения.
+	Допустим задана поверхность, ограничивающая некоторую область пространства
+	$D=[0,X]\times [0,Y]\times [0,Z]$.
+	Область пространства $D$ разделена на слои $D_1$ и $D_2$ границей $B$, с постоянной
+	скоростью звука $c_1$ и $c_2$ соответственно.
+	На поверхности наблюдения находятся точечный источник колебаний $S$, который возбуждает
+	акустическую волну, являющуюся решением уравнения
+	\begin{equation}
+		\frac{\partial^2 P}{\partial x^2} + \frac{\partial^2 P}{\partial y^2} +
+		\frac{\partial^2 P}{\partial z^2} - \frac{1}{c^2} \frac{\partial^2 P}{\partial
+			t^2} = -F(x,y,z,t).
+		\label{eq:wav}	
+	\end{equation} 
+	Модель среды изображена на рисунке \ref{fig:mig}.
+	
 	\begin{figure}[h]
 		
 		\centering
-		\includegraphics{migration_fig.pdf}
+		\includegraphics[width=0.9\textwidth]{migration_fig.pdf}
 		
 		\caption{Модель среды}
 		\label{fig:mig}
 	\end{figure}
-	Рассмотрим задачу нахождения значения скалярного волнового поля на поверхности
-	наблюдения.
-	Допустим задана поверхность, ограничивающая некоторую область пространства
-	$D=[0,X]\times [0,Y]\times [0,Z]$, изображённую на рисунке \ref{fig:mig}.
-	Область пространства $D$ разделена на слои $D_1$ и $D_2$ границей $B$, с постоянной
-	скоростью звука $c_1$ и $c_2$ соответственно.
-	На границе находятся точечные источники колебаний $S$, которые возбуждают
-	акустическую волну.
-	
-	Необходимо по данным характеристикам источников найти значение отражённого волнового поля
+	% DONE RK Сколько источников рассматривается, один или несколько?
+	Необходимо по данным характеристикам источника найти значение отражённого волнового поля
 	на поверхности наблюдения $z=0$.
 	
-%	\section{Волновое уравнение}
 
+	%TODO поправить обозначения с соотвествии с рисунком
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\subsection{Функция Грина} 
-		Решение данной задачи можно получить при помощи решения
-	дифференциального волнового уравнения \ref{eq:wav}. 
+		Решение задачи моделирования можно получить при помощи решения
+	дифференциального волнового уравнения  \eqref{eq:wav}.
+
+	% DONE RK Функция Дирака не описывает источник колебаний, а только один импульс.
+	Рассмотрим импульс мгновенного точечного источника колебаний в трёхмерном пространстве.
+	Тогда правая часть уравнения \eqref{eq:wav} будет иметь вид \cite{zhdanov1988}
 	\begin{equation}
-		\frac{\partial^2 P}{\partial x^2} + \frac{\partial^2 P}{\partial y^2} +
-		\frac{\partial^2 P}{\partial z^2} - \frac{1}{c^2} \frac{\partial^2 P}{\partial
-			t^2} = -F(x,y,z,t)   
-		\label{eq:wav}	
-	\end{equation}
-	
-	Рассмотрим мгновенный точечный источник колебаний в трёхмерном пространстве.
-	Тогда правая часть уравнения \ref{eq:wav} будет иметь вид \cite{zhdanov1988}
-	\begin{equation}
-		F(x,y,z,t) = \delta(t-t')\delta(x-x')\delta(y-y')\delta(z-z')
+		F(x,y,z,t) = \delta(t-t_0)\delta(x-x_0)\delta(y-y_0)\delta(z-z_0),
 		\label{eq:ptsrc}
 	\end{equation}
 	Где $\delta(x)$ -- это дельта-функция Дирака.
@@ -102,26 +118,27 @@
 		\end{cases}
 		\label{eq:deltadef}
 	\end{equation}	
-	Решением уравнения \ref{eq:wav} с правой частью \ref{eq:ptsrc} является функция
+	Решением уравнения \eqref{eq:wav} с правой частью \eqref{eq:ptsrc} является функция
 	Грина для волнового уравнения в трёхмерном пространстве.
 	
 	Пусть источник колебаний находится в начале координат и время импульса $t' = 0$. 
 	
 	Так как правая часть уравнения равна 0 везде, кроме точки $O(0,0,0)$, поэтому 
-	$G$ удовлетворяет уравнению \ref{eq:uwav} всюду, кроме начала координат
+	$G$ удовлетворяет уравнению \eqref{eq:uwav} всюду, кроме начала координат
 	\begin{equation}
 		\frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2} +
 		\frac{\partial^2 G}{\partial z^2} - \frac{1}{c^2} \frac{\partial^2 G}{\partial
 			t^2} = 0.
 		\label{eq:uwav}
 	\end{equation}
-	Учитывая сферическую симметрию функции Грина, перейдём в уравнении \ref{eq:uwav} к сферической системе координат
+	Учитывая сферическую симметрию функции Грина, перейдём в уравнении \eqref{eq:uwav} к сферической системе координат
 	\begin{equation}
 		\frac{1}{r^2}\frac{\partial}{\partial r}\left( r^2 \frac{\partial G}{\partial r} \right)- \frac{1}{c^2} \frac{\partial^2 G}{\partial
 			t^2} = 0.
 		\label{eq:uswav}
 	\end{equation}
-	Воспользовавшись равенством $\frac{1}{r}\frac{\partial}{\partial r}\left(r^2\frac{\partial G}{\partial r}\right) = \frac{\partial^2}{\partial r^2}\left(rG\right)$ преобразуем уравнение \ref{eq:uswav}:
+
+	Воспользовавшись равенством $\frac{1}{r}\frac{\partial}{\partial r}\left(r^2\frac{\partial G}{\partial r}\right) = \frac{\partial^2}{\partial r^2}\left(rG\right)$ преобразуем уравнение \eqref{eq:uswav}:
 	\begin{equation}
 		\frac{\partial^2}{\partial r^2}\left( r  G\right)- \frac{1}{c^2} \frac{\partial^2 }{\partial
 			t^2}\left(r G\right) = 0.
@@ -129,23 +146,43 @@
 	\end{equation}
 	Таким образом мы смогли свести уравнение к одномерному волновому уравнению относительно $F(r,t) = rG$. При помощи замены переменных $\xi = t - \frac{r}{c}$, $\eta = t+\frac{r}{c}$ к простому виду:
 	\begin{equation}
-		\frac{\partial^2}{\partial \xi \partial \eta} F = 0	
+		\frac{\partial^2}{\partial \xi \partial \eta} F = 0.
 		\label{eq:canonwav}
 	\end{equation}
-	Интегрируя уравнение \ref{eq:canonwav}, выразим значение функции Грина из решения дифференциального уравнения:
+	Интегрируя уравнение \eqref{eq:canonwav}, выразим значение функции Грина из решения дифференциального уравнения:
 	\begin{equation}
 		G(x,y,z,t) = \frac{1}{r}f\left(t-\frac{r}{c}\right) + \frac{1}{r} g\left(t+\frac{r}{c}\right),
 		\label{eq:canonsol}
 	\end{equation}
 где $r = \sqrt{x^2+y^2+z^2}$.
 
-Первое слагаемое выражения \ref{eq:canonsol} описывает сферическую волну, которая распространяется от начала координат в бесконечность, а второе слагаемое -- сферическую волну из бесконечности к началу координат. Поскольку, по условиям задачи, источником колебания является единственный источник, то функцию $g$ примем равной нулю.  Чтобы найти функцию  $f$  подставим решение \ref{eq:canonsol} в уравнение \ref{eq:wav}. 
+Первое слагаемое выражения \eqref{eq:canonsol} описывает сферическую волну, которая распространяется от начала координат в бесконечность, а второе слагаемое -- сферическую волну из бесконечности к началу координат. Поскольку, по условиям задачи, источником колебания является единственный источник, то функцию $g$ примем равной нулю.  Чтобы найти функцию  $f$  подставим решение \eqref{eq:canonsol} в уравнение \eqref{eq:wav}. 
 \begin{equation}
 	\Delta \left[ \frac{1}{r}f\left(t-\frac{r}{c}\right) \right] - \frac{1}{c^2} \frac{\partial^2 }{\partial
-		t^2}\left[ \frac{1}{r}f\left(t-\frac{r}{c}\right) \right]  = - \delta(t)\delta(x)\delta(y)\delta(z)
+		t^2}\left[ \frac{1}{r}f\left(t-\frac{r}{c}\right) \right]  = - \delta(t)\delta(x)\delta(y)\delta(z).
 		\label{eq:fwav}
 \end{equation}
-Используя равенство $\Delta\left(\frac{1}{r}\right) = -4\pi \delta(x)\delta(y)\delta(z)$, можно привести уравнение \ref{eq:fwav}
+	%DONE RK Откуда следует это равенство?
+Для дальнейшего вывода покажем справедливость следующего равенства \cite{morse}
+	\begin{equation}
+		\Delta\left(\frac{1}{r}\right) = -4\pi \delta(x)\delta(y)\delta(z).
+		\label{eq:del1r}
+	\end{equation}
+Проинтегрируем обе части равенства по сфере $E$ с центром в начале координат и радиусом $\varepsilon \to 0$.
+\begin{equation}
+	\iiint_E \Delta\left(\frac{1}{r}\right) \, dE = -4\pi \iiint_E \delta(x)\delta(y)\delta(z) \, dE.
+\end{equation}
+По теореме Остроградского-Гаусса можно представить правую часть равенства как интеграл по поверхности сферы $E$.
+\begin{equation}
+	\iint_{\partial E} \gradop \left(\frac{1}{r}\right) \, dE = -4\pi.
+\end{equation}
+Так как подынтегральное выражение не зависит от выбора точки на поверхности шара, то предыдущее выражение можно представить в следующей форме:
+\begin{equation}
+	 \left.\diff{}{r}\left(\frac{1}{r}\right)\right|_{r=\varepsilon} \cdot 4\pi \varepsilon^2 = -4\pi,
+\end{equation}	
+откуда следует тождество.
+
+Используя равенство \eqref{eq:del1r}, можно привести уравнение \eqref{eq:fwav}
 к виду 
 \begin{equation}
 	-4\pi f(t) \delta(x) \delta(y) \delta(z)  = \delta(x) \delta(y) \delta(z) \delta(t),
@@ -158,11 +195,11 @@
 \end{equation}  
 где $r = \sqrt{x^2+y^2+z^2}$.
 
-При выводе формулы \ref{eq:green3d0} использовалось предположение,  что источник находится в начале координат  и посылает импульс в момент времени $t' = 0$. При переходе к произвольному положению источника 
+При выводе формулы \eqref{eq:green3d0} использовалось предположение,  что источник находится в начале координат  и посылает импульс в момент времени $t' = 0$. При переходе к произвольному положению источника 
 формула для функции Грина имеет вид
 \begin{equation}
-	G(\bar{r}',t'|\bar{r},t)= \frac{1}{4\pi|\bar{r}'-\bar{r}|}
-	\delta\left(t'-t-\frac{|\bar{r}'-\bar{r}|}{c}\right)
+	G(\bar{r}',t'|\bar{r}_0,t_0)= \frac{1}{4\pi|\bar{r}'-\bar{r}_0|}
+	\delta\left(t'-t_0-\frac{|\bar{r}'-\bar{r}_0|}{c}\right).
 \label{eq:green3d}
 \end{equation}
 
@@ -174,12 +211,35 @@
 	
 	Для волнового уравнения с произвольной правой частью $F(x,y,z,t)$ можно
 	записать формулу представления решения 
-	в аналитическом виде при помощи функции Грина, введя вектор $\bar{r} = (x,y,z)$: \cite{zhdanov2007}
+	в аналитическом виде при помощи функции Грина, введя вектор $\bar{r} = (x,y,z)$: \cite{vladimirov}
+	
+	% TODO RK
+	
+	
 	\begin{equation}
-		P(\bar{r}',t')=\iiint\limits_{D_1} \int\limits_{-\infty}^{+\infty}
-		F(\bar{r},t) G(\bar{r}',t'|\bar{r},t)\,dt\,dv
+		P(\bar{r}',t')=\iiint\limits_{D_1} \int\limits_{0}^{+\infty}
+		F(\bar{r},t) G(\bar{r}' - \bar{r},t'- t)\,dt\,dv
+		\label{eq:wavfgconv}
 	\end{equation}
-	%TODO ссылка на литру
+	
+	Покажем, что выражение \eqref{eq:wavfgconv} является решением уравнения \eqref{eq:wav} с произвольной правой частью.
+	Представим выражение \eqref{eq:wavfgconv} в виде свёртки функций по пространству и времени $P = F*G$. В силу линейности  и теоремы о дифференцировании свёртки функцию $F$ можно вынести из дифференциального оператора.
+	Тогда правую часть волнового уравнения записать как 
+	\begin{equation}
+		\Delta [F*G] -\frac{1}{c^2} \diff[2]{}{t} [F*G] = F*\left[\Delta G -\frac{1}{c^2} \diff[2]{}{t} 
+		G\right] 
+	\end{equation}
+	По определению функция Грина является решением волнового уравнения с трёхмерной дельта-функцией в правой части, следовательно
+	\begin{equation*}
+		F*\left[\Delta G -\frac{1}{c^2} \diff[2]{}{t} G\right] = -F * \delta
+	\end{equation*}
+	По свойству дельта-функции 
+	\begin{equation}
+		-\iiint\limits_{D_1} \int\limits_{-\infty}^{+\infty}
+		F(r_0,t_0) \delta({r} - {r}_0,t- t_0)\,dt_0\,dv_0' = -F(x,y,z,t),
+	\end{equation}
+	что совпадает с исходной правой частью волнового уравнения   \eqref{eq:wav}.
+	%DONE ссылка на литру
 	
 % DONE Связь излучаемого и отраженного волнового поля через коэффициент отражения
 
@@ -216,22 +276,32 @@
 		\divop (v \gradop u) = v\Delta u + \gradop v \cdot \gradop u.
 		\label{eq:divgrad2}
 	\end{equation}
-	Путём вычитания из уравнения \ref{eq:divgrad1} уравнения \ref{eq:divgrad2} получим 
+	Путём вычитания из уравнения \eqref{eq:divgrad1} уравнения \eqref{eq:divgrad2} получим 
 	\begin{equation}
 		\divop (u \gradop v - v \gradop u)  = u\Delta v - v \Delta u
 		\label{eq:divgraddiff}
 	\end{equation}
 	Пусть векторы $r = (x,y,z) \in S$ и $r' = (x',y',z') \in D$ -- это радиус-векторы точек на поверхности $S$ и области $D$ соответственно.
 	Положим 
+	% DONE RK Надо пояснить, каким уравнениям удовлетворяют P и G.
 	\begin{eqnarray}
 		u(x,y,z,t) =& P(x,y,z,t),\label{eq:subsu}\\
 		v(x,y,z,t) = &G(x',y',z',t'|x,y,z,t),\label{eq:subsv}
-	\end{eqnarray}	
-	тогда 
+	\end{eqnarray}
+	где волновое поле $P$ удовлетворяет уравнению \eqref{eq:uwav2}, 
+	а функция Грина $G$ удовлетворяет равенству 
+	\begin{equation}
+		\diff[2]{G}{x}  + \diff[2]{G}{y} +
+		\diff[2]{G}{z}  - \frac{1}{c^2} \frac{\partial^2 G}{\partial
+			t^2} = \delta(x-x')\delta(y-y')\delta(z-z')\delta(t-t')
+		\label{eq:wavgdel}
+	\end{equation}
+	тогда из \eqref{eq:uwav2} и \eqref{eq:wavgdel} соответственно можно выразить 
 	% DONE  Ввести вектора r и r'
 	% DONE ввести обозначения для случаев, где функция без аргументов
 \begin{eqnarray}
-	\Delta u =& \frac{1}{c^2} \diff[]{P}{t},\label{eq:subsdu}\\
+	% DONE RK Откуда это уравнение?
+	\Delta u =& \frac{1}{c^2} \diff[2]{P}{t},\label{eq:subsdu}\\
 	\Delta v = &\delta (r' - r) \delta(t' - t) + \frac{1}{c^2} \diff [2]{G(r' -r,t'-t)}{t},\label{eq:subsdv}
 \end{eqnarray}
 где $r=(x,y,z)$. Для краткости обозначим
@@ -239,7 +309,7 @@
 		P =& P(r,t) \\
 		G =& G(r',t'|r,t)
 	\end{align*}
-	Проинтегрируем уравнение \ref{eq:divgraddiff} по времени
+	Проинтегрируем уравнение \eqref{eq:divgraddiff} по времени
 	\begin{equation}
 		\divop \int\limits_{-\infty}^{+\infty} [P \gradop G - G \gradop P ]\, dt=  P\delta(r-r') +\frac{1}{c^2}\int\limits_{-\infty}^{+\infty}\left[P\diff[2]{G}{t} - G \diff[2]{P}{t}\right]\,dt.
 		\label{eq:ugauss}
@@ -249,23 +319,34 @@
 	\int\limits_{-\infty}^{+\infty}\left[P\diff[2]{G}{t} - G \diff[2]{P}{t}\right]\,dt = 0.
 	$$
 	Введём обозначение 
-	$$
-		F(x,y,z,t') = \int\limits_{-\infty}^{+\infty} [P \gradop G - G \gradop P ]\, dt
-	$$
-	Тогда из уравнений \ref{eq:ugauss} и \ref{eq:vgauss} следует
 	\begin{equation}
-		\iiint\limits_D P\delta(r-r') \, dv = \iint\limits_S F \cdot n \, ds 
+			F(x,y,z,t') = \int\limits_{-\infty}^{+\infty} [P \gradop G - G \gradop P ]\, dt,
+		\label{eq:kirf}
 	\end{equation}
-Таким образом, 
-	% TODO не физично
-	% TODO подставить все до конца раздела
+	тогда из уравнений \eqref{eq:ugauss} и \eqref{eq:vgauss} следует
+	\begin{equation}
+		\iiint\limits_D P\delta(r-r') \, dv = \iint\limits_S F \cdot n \, ds,
+	\end{equation}
+	где из обозначения \eqref{eq:kirf} следует
+	\begin{equation}
+		F\cdot n =  \int\limits_{-\infty}^{+\infty} 
+		[G(r',t'|r,t)\gradop P(r,t) \cdot n
+		- P(r,t)\gradop G(r',t'|r,t) \cdot n] \,dt.
+	\end{equation}
+Таким образом, получаем соотношение:
+	% DONE не физично подставить все до конца раздела
+	%TODO На бесконечной области ?
+	
+	%TODO RK 1. Формула требует пояснения, необходимо дополнить вывод.
+	%TODO RK 2. Посмотрите вывод формулы Кирхгофа в классических курсах по УМФ: Тихонов, Самарский; Байков, Жибер.
 	\begin{equation}
 		P(r',t') = \iint\limits_{\partial D} \int\limits_{-\infty}^{+\infty} 
 	[G(r',t'|r,t)\partial_n P(r,t) 
-	- P(r,t)\partial_n G(r',t'|r,t)] \,dt\,ds
+	- P(r,t)\partial_n G(r',t'|r,t)] \,dt\,ds.
 	\label{eq:kir}
 	\end{equation}
 	
+	%\include{kirchhoff_samar.tex}
 	
 	Это соотношение носит название интегральной формулы Кирхгофа.
 	Интегральная
@@ -273,14 +354,155 @@
 	ограниченной некоторой поверхностью, по значениям этого поля (и его нормальной
 	производной) на границе области.
 	
-	Для ...%TODO написать про формулу из Покровской
+	Подставим в формулу \eqref{eq:kir} функцию Грина \eqref{eq:green3d} для однородного трёхмерного пространства:
+	\begin{equation}
+		P\left(r',t'\right)=\frac{1}{4\pi}\iint_{\partial D}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{|r'-r|}\right)+\frac{1}{c |r'-r|}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D,
+		\label{eq:kirg0}
+	\end{equation}
+		где квадратные скобки обозначают значения функций для $t=t'-\frac{|r'-r|}{c}$.
+	
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\textwidth]{kir_inf.pdf}
+		\caption{}
+		\label{fig:kir_inf}
+	\end{figure}
+	
+	Пусть область $D$ (изображена на рисунке \ref{fig:kir_inf}) ограничена сверху бесконечной горизонтальной границей $B$, а снизу -- сферой с центром в точке $r'$ радиуса $R$. Обозначим область поверхности $B$ внутри сферы как $D^+$, а границу сферы выше поверхности $B$ как $D^-$. Для границы области $D$ справедлива формула Кирхгофа \eqref{eq:kirg0}.
+	Обозначим 
+	\begin{gather*}
+		I^+=\frac{1}{4\pi}\iint_{D^+}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{|r'-r|}\right)+\frac{1}{c |r'-r|}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D, \\
+		I^-=\frac{1}{4\pi}\iint_{D^-}^{}\left\{\frac{1}{R}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{R}\right)+\frac{1}{c R}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D,	
+	\end{gather*}
+	Тогда интеграл Кирхгофа \eqref{eq:kirg0} можно представить в виде суммы 
+	\begin{equation*}
+		P(r',t') = I^+ +I^-.
+	\end{equation*}
+	
+	При устремлении $R \to \infty$ выражение $I^-$ стремится к нулю. Следовательно, для полупространства выше поверхности $B$ можно записать:
+	\begin{equation}
+		P\left(r',t'\right)=\frac{1}{4\pi}\iint_{B}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{|r'-r|}\right)+\frac{1}{c |r'-r|}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D.
+	\end{equation}
+	
+	%TODO ???????????????????????????????????????????????????????????????????????????????????????????
+	Далее, необходимо получить выражение для волнового поля, отражённого от отражающей границы.
+	Волновое поле, созданное точечным источником, удовлетворяет неоднородному уравнению
+	\begin{equation}
+		\frac{\partial^2 P_0}{\partial x^2} + \frac{\partial^2 P_0}{\partial y^2} +
+		\frac{\partial^2 P_0}{\partial z^2} - \frac{1}{c^2} \frac{\partial^2 P_0}{\partial
+			t^2} = -f(t)\delta(x-x_0)\delta(y-y_0)\delta(z-z_0).
+	\end{equation}
+	Решение этого уравнения можно представить в интегральном виде, используя формулу \eqref{eq:wavfgconv}:
+	\begin{equation}
+		P_0(r,t) = \frac{f(t-\frac{|r-r_0|}{c})}{4\pi|r-r_0|}.
+	\end{equation}
+	Отражённое волновое поле связано с падающим волновым полем через коэффициент отражения: 
+	\begin{equation}
+		P_1(r,t) = \Lambda(r) \cdot P_0(r,t)
+	\end{equation}
+	\begin{equation}
+		\diff{}{n}P_1(r,t) = -\Lambda(r) \cdot  \diff{}{n} P_0(r,t)
+	\end{equation}
+	Продолжим отражённое  волновое поле наверх при помощи интегральной формулы Кирхгофа \eqref{eq:kir}:
+	\begin{equation}
+		P\left(r_0',t'\right)=\frac{1}{4\pi}\iint_{B}^{}\left\{\frac{1}{|r_0'-r|}\left[\frac{\partial P_1}{\partial n}\right]-\left[P_1\right]\frac{\partial}{\partial n}\left(\frac{1}{|r_0'-r|}\right)+\frac{1}{c r}\left[\frac{\partial P_1}{\partial t}\right]\frac{d r_0'}{d n}\right\}d B,
+		\label{eq:kirp0}
+	\end{equation}
+	где квадратные скобки обозначают значения функций для $t=t'-\frac{|r'-r|}{c}$, $r\in B$,  $r_0'$ принадлежит плоскости $z=0$.
+	Так как величины $\frac{1}{|r_0'-r|}$ и $\frac{1}{|r-r_0|}$ меняются достаточно медленно   по сравнению с  $f$ \cite{buchen}, то при дифференцировании можно принять их за постоянные:
+	\begin{equation}
+		P\left(r',t'\right)=\frac{1}{4\pi}\iint_{B}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P_1}{\partial n}\right]+\frac{1}{c |r'-r|}\left[\frac{\partial P_1}{\partial t}\right]\frac{d (r'-r)}{d n}\right\}d B,
+	\end{equation}
+	\begin{equation}
+		\frac{\partial P_1}{\partial n}=\Lambda(r)\frac{f'(t-\frac{|r-r_0|}{c})}{4\pi|r-r_0|c} \cdot \cos (n,r-r_0) ,
+	\end{equation}
+	\begin{equation}
+		\diff{P_1}{t}=\Lambda(r)\frac{f'(t-\frac{|r-r_0|}{c})}{4\pi|r-r_0|} ,
+	\end{equation}
+	\begin{equation}
+		\frac{d r_0'}{d n}= \cos (n,r_0'-r).
+	\end{equation}
 
-	\subsection{Уравнение Гельмгольца}
+	
+	\begin{comment}
+	Так как поверхность наблюдения представляет собой плоскость, то это выражение можно упростить.   Для этого рассмотрим точку $r''$ в верхнем полупространстве, симметричную точке $r'$, в которой вычисляется продолжение волнового поля. Пусть вектор $r' $ имеет координаты $(x',y',z') $, тогда $r'' = (x',y',-z')$.  Так как функция Грина симметрична относительно плоскости наблюдения, то справедливы соотношения
+
+	\begin{gather}
+		G(r',t'|r,t) = G(r'',t',|r,t) \\
+		\diff{}{n} G(r',t'|r,t) = - \diff{}{n} G(r'',t'|r,t)\\
+	\end{gather}
+	Точка $r''$ находится вне области продолжения $D$, поэтому по теореме Остроградского-Гаусса интеграл Кирхгофа в этой точек будет равен нулю:
+	\begin{equation}
+				\iint\limits_{\partial D} \int\limits_{-\infty}^{+\infty} 
+		[G(r'',t'|r,t)\partial_n P(r,t) 
+		- P(r,t)\partial_n G(r'',t'|r,t)] \,dt\,ds = 0
+	\end{equation} 
+	\begin{equation}
+			\iint\limits_{\partial D} \int\limits_{-\infty}^{+\infty} G(r',t'|r,t)\partial_n P(r,t)  \,dt\,ds = - \iint\limits_{\partial D} \int\limits_{-\infty}^{+\infty} P(r,t)\partial_n G(r',t'|r,t) \,dt\,ds 
+			\label{eq:kirflatgdp}
+	\end{equation}
+	Подставив \eqref{eq:kirflatgdp} в формулу \eqref{eq:kir} можно получить следующее выражение:
+	\begin{equation}
+		P(r',t') = 2\iint\limits_{\partial D}\int\limits_{-\infty}^{+\infty}  P(r,t)\partial_n G(r'-r,t'-t) \,dt\, ds
+	\end{equation}
+	
+	Представим подынтегральное выражение в формуле Кирхгофа в виде свёртки 
+	%TODO RK
+	\begin{equation}
+		P(r',t') = \iint\limits_{B} \diff{}{n} \int\limits_{-\infty}^{+\infty} 
+		\left[ P(r,t) \frac{1}{2\pi|\bar{r}'-\bar{r}|}
+		\delta\left(t'-t-\frac{|\bar{r}'-\bar{r}|}{c}\right) \right] \,dt\,dB
+	\end{equation}
+	%TODO RK Нужен вывод из предыдущего уравнения.
+	\begin{equation}
+		P(r',t') = \iint\limits_{B} \diff{}{n} \left[ P\left(r,t'- \frac{|\bar{r}'-\bar{r}|}{c}\right) \frac{1}{2\pi|\bar{r}'-\bar{r}|}
+	 	\right] \,dB
+	\end{equation}
+	где $P(r,t)=\frac{f\left(t-\frac{|r-r_0|}{c}\right)}{4\pi^2 |r-r_0|}$ - это волна, порождённая точечным источником колебаний на поверхности, $f(t)$ - импульс источника.
+	\begin{equation}
+		P(r',t') = \iint\limits_{B} \diff{}{n} \left[\frac{f\left(t'-\frac{|r'-r|+|r-r_0|}{c}\right) }{8\pi^2|r'-r||r-r_0|} \right] \,dB
+	\end{equation}
+
+	Так как расстояние между поверхностью наблюдения и границей раздела сред достаточно велико, то величины $\frac{1}{|r'-r|}$ и $\frac{1}{|r-r_0|}$ можно приблизительно считать постоянными. \cite{buchen} Пусть единичный вектор нормали имеет координаты $n= (n_x,n_y,n_z)$, тогда производную по нормали от запаздывающей функции импульса источника можно вычислить как 
+	\begin{align}
+		\diff{}{n} f\left(t' - \frac{|r'-r|+|r-r_0|}{c}\right) = - f'\left(t' - \frac{|r'-r|+|r-r_0|}{c}\right) \cdot \nonumber \\ \left(\frac{(x'-x)\cdot n_x + (y'-y)\cdot n_y + (z'-z)\cdot n_z }{c|r'-r|} + \nonumber \right.\\ \left. \frac{(x-x_0)\cdot n_x + (y-y_0)\cdot n_y + (z-z_0)\cdot n_z }{c|r-r_0|}\right).
+	\end{align}
+\end{comment}
+	%DONE RK Вывод и графическое пояснение.
+	\begin{equation}
+		P(r',t') = \iint\limits_{B} \left[\Lambda(r) \frac{f'\left(t'-\frac{|r'-r|+|r-r_0|}{c}\right) }{16\pi^2c|r'-r||r-r_0|} (\cos \psi_1 + \cos \psi_2) \right] \,dB
+		\label{eq:modapx}
+	\end{equation}
+где $\psi_1$ -- угол между нормалью к поверхности $B$ и вектором $r_0'-r$,
+$\psi_2$ -- угол между нормалью к поверхности $B$ и вектором $r-r_0$. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{model_fig.pdf}
+	\caption{}
+	\label{fig:model}
+\end{figure}
+%TODO рисунок
+Обозначим суммарное время от источника колебаний в точке $r_0$ до точки на отражающей поверхности $r$ и от $r$ до заданной точке на поверхности наблюдения $r_0'$ за $$\tau(r_0',r) =\frac{|r_0'-r|+|r-r_0|}{c},$$ а коэффициент, зависящий от $r$ и $r'$ -- за 
+$$
+	W(r',x,y,z) = - \frac{\cos \psi_1 + \cos \psi_2}{8\pi c|r'-r||r-r_0|}.
+$$ 
+
+
+
+Можно представить полученное выражение в виде интеграла, представляющего решение задачи сейсмического моделирования: \cite{pokr}:
+% DONE RK Как выводится (1.3.17)?
+\begin{equation}
+	P(r_0',t') = \frac{1}{2\pi} \iint_{z=B(x,y)} W(r_0',x,y,z) f'[t-\tau(r_0',r)] dB,
+	\label{eq:modpokr}
+\end{equation}
+где $W(r_0',x,z)$ -- весовая функция, зависящая от функции Грина и угла падения волны на отражатель.
+	\subsection{Уравнение Гельмгольца и коэффициент отражения}
 	Для дальнейших рассуждений будет удобно перейти от временной области в частотную. Представим поле $P(r,t)$ как суперпозицию полей в частотной области $p(r,\omega)$:
 	\begin{equation}
 		P(r,t) =  \int_{-\infty}^{\infty} p(r,\omega) e^{i\omega t}\, d\omega
 	\end{equation}
-	Применим преобразование Фурье к волновому уравнению \ref{eq:wav}:
+	Применим преобразование Фурье к волновому уравнению \eqref{eq:wav}:
 	\begin{equation}
 		\int_{-\infty}^{\infty} \left[ \nabla^2 P(r,t) + \frac{1}{c^2}\diff[2]{P(r,t)}{t}\right] e^{-i\omega t} \, dt = - \int_{-\infty}^{\infty}   F(r,t) e^{-i\omega t} \, dt
 	\end{equation}
@@ -290,82 +512,148 @@
 		\nabla^2 p(r,\omega) + \frac{\omega^2}{c^2}p(r,\omega) = - f(r,\omega)
 		\label{eq:helmholtz}
 	\end{equation}
-	\subsection{Коэффициент отражения}
-	% Из Гельмгольца вывести
-	% TODO взять условия равенства  давлений на границе раздела сред
-	Запишем уравнение из 	
-	% разделение поля на фоновое и аномальное.
-	
-	
-	При отражении отражении акустической волны от границы на поверхности раздела должны быть равны давления и нормальные скорости в обеих средах.
+	\begin{comment}
+	Для уравнения Гельмгольца также справедлива формула, аналогичная формуле Кирхгофа \eqref{eq:kir}.
+	Чтобы вывести аналог формулы Кирхгофа в частотной области, представим её в виде свёртки:
+	\begin{equation}
+	P(r',t') = \iint\limits_{S} \int\limits_{-\infty}^{+\infty} 
+	[G(r'-r,t'-t)\partial_n P(r,t) ]dt
+	- \int\limits_{-\infty}^{+\infty}  [ P(r,t)\partial_n G(r'-r,t'-t)] \,dt\,dS
+\end{equation}
+	По теореме о свёртке, преобразование Фурье от свёртки функций будет иметь вид
+	\begin{gather}
+		\int\limits_{-\infty}^{+\infty} \int\limits_{-\infty}^{+\infty}  [G(r'-r,t'-t)\partial_n P(r,t) ]e^{-i\omega t'}\,dt\,dt' =   g(r'-r,\omega)\partial_n p(r,\omega) \\
+		\int\limits_{-\infty}^{+\infty} \int\limits_{-\infty}^{+\infty}  [\partial_nG(r'-r,t'-t)P(r,t) ]e^{-i\omega t'}\,dt\,dt' =  \partial_n g(r'-r,\omega)p(r,\omega) 
+	\end{gather}
+	Таким образом, получается формула Кирхгофа в частотной области:
+	\begin{equation}
+		p(r',\omega) = \iint\limits_{S} [g(r'-r,\omega)\partial_n p(r,\omega) ]
+		-   [ p(r,t)\partial_n g(r'-r,\omega)] \,dS
+		\label{eq:kirfrq}
+	\end{equation}
+	\end{comment}
+	%\subsection{Коэффициент отражения}
+	Рассмотрим отражение звуковой волны в плоскости $xz$ от плоской границы раздела сред $z=0$. Волну созданную точечным источником колебаний на большом удалении можно приблизительно считать плоской. 
 
-	
-	Используя известную  зависимость между звуковым давлением $p$ и нормальной скоростью $\diff{p}{n}$, запишем выражения звуковых давлений через волновое сопротивление, соответственно, в падающей ($p_0$), отражённой ($p_1$) и прошедшей ($p_2$) волнах. \cite{brehovskih} 
-	% TODO ссылку на нормальную литературу.
-	
-	
-	%\begin{comment}
-	\begin{eqnarray}
-		P_0 = v_0 \rho_1 c_1 \label{eq:pvrc0} \\
-		P_1 = - v_1 \rho_1 c_1 \label{eq:pvrc1}\\
-		P_2 = v_2 \rho_2 c_2 \label{eq:pvrc2}
-	\end{eqnarray}
-	Условия неразрывности звукового давления и колебательной скорости на границе сред:
-	\begin{eqnarray}
-		P_0 + P_1 = P_2 \label{eq:p012}\\
-		v_0 + v_1 = v_2 \label{eq:v012}
-	\end{eqnarray}
-	Выражая из уравнений \ref{eq:pvrc0}, \ref{eq:pvrc1} и \ref{eq:pvrc2} значения колебательной скорости и подставляя их в выражение \ref{eq:v012}, получим систему линейных уравнений относительно значений звукового давления:
-	\begin{eqnarray}
-		P_0 + P_1 =& P_2 \nonumber\\
-		\frac{P_0}{\rho_1 c_1} - \frac{P_1}{\rho_1 c_1} =& \frac{P_2}{\rho_2 c_2} 
-	\end{eqnarray}
-	Из решения данной линейной системы можно выразить отношение $\Lambda$ между давлениями падающего и отражённого полей:
+	Плоской волной называется решение волнового уравнения \eqref{eq:uwav2} вида $$P(\xi) := P\left(\frac{n_xx+n_yy+n_zz}{c}-t\right),$$ где $n(n_x,n_y,n_z)$ -- нормаль к фронту волны.
+	При помощи преобразования Фурье выразим плоскую как интеграл по гармоническим колебаниям частоты $\omega$:
 	\begin{equation}
-		P_1 = P_0 \cdot \frac{\rho_2 c_2 - \rho_1 c_1}{\rho_1 c_1 + \rho_2 c_2 }.
-		\label{eq:nreflratio}
+		P(\xi) = \int \limits_{-\infty}^{\infty} p(r,\omega) e^{i\omega \xi}\, d\xi 
 	\end{equation}
-	
-	Введём обозначения для коэффициентов отражения и прохождения:
+
+	Пусть на плоскость падает плоская гармоническая волна $e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}$.
+	Обозначим амплитуду падающей волны за единицу, амплитуду отражённой волны за $V$, а амплитуду преломлённой волны за $W$.
+	Тогда выражения для падающей, отражённой и преломлённой волн можно записать в виде \cite{brehovskih} 
+	%DONE RK Откуда следуют эти формулы?
 	\begin{gather}
-		\beta =  \frac{\rho_2 c_2 - \rho_1 c_1}{\rho_1 c_1 + \rho_2 c_2 },\\
-		\alpha =  \frac{\rho_1 c_1}{\rho_1 c_1 + \rho_2 c_2 }.
-	\end{gather} 
-	%\end{comment}
-	Это соотношение описывает отражённое волновое поле соответствующее  волне, падающей перпендикулярно границе раздела двух сред. 
-	Если рассматривать падение звука под некоторым углом, то ширины падающего, отражённого и преломлённого лучей будут  пропорциональны косинусам соответствующих углов.\cite{zakharov} 
-	В таком случае уравнение закона сохранения кинетической энергии при падении волны под углом $\theta_1$ и преломлении под углом $\theta_2$ к нормали границы сред примет вид:
+		p_0(r,\omega) = e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)},\label{eq:reflp0}\\ 
+		p_1(r,\omega) = \Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)},\label{eq:reflp1}\\
+		p_2(r,\omega) = W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}\label{eq:reflp2}.
+	\end{gather}
+	где $\theta$ и $\theta_2$ обозначают углы падения и преломления соответственно. Волны \eqref{eq:reflp1} и \eqref{eq:reflp2} удовлетворяют уравнению 
 	\begin{equation}
-		\frac{\rho_1 \lambda_1 v^2 \cos \theta_1}{2} = \frac{\rho_1 \lambda_1 (v\beta)^2 \cos \theta_1}{2} + \frac{\rho_2 \lambda_2 \cos \theta_2 (v\alpha)^2 }{2}
-		\label{eq:reflecl}
+		\nabla^2 p(r,\omega) + \frac{\omega^2}{c_1^2}p(r,\omega) = - f(r,\omega),
 	\end{equation}
-	Векторное уравнение сохранения количества движения содержит в знаменателях каждого члена косинусы направления колебаний продольных волн в каждом луче:
+	а  \eqref{eq:reflp2} удовлетворяет уравнению
 	\begin{equation}
-		\rho_1 \lambda_1 \cos \theta_1 \cdot \frac{v}{\cos \theta_1} = \frac{\rho_1 \lambda_1 \cos \theta_1 \cdot v \beta}{\cos \theta_1} + \frac{\rho_2 \lambda_2 \cos \theta_2 \cdot v\alpha}{\cos\theta_2}
-		\label{eq:reflicl}
+		\nabla^2 p(r,\omega) + \frac{\omega^2}{c_2^2}p(r,\omega) = 0.
 	\end{equation}
-	Из решения системы уравнений \ref{eq:reflecl} и \ref{eq:reflicl} аналогично можно выразить коэффициенты отражения и прохождения:
-	\begin{gather}
-		\beta =  \frac{\rho_2 c_2 - \rho_1 c_1}{\rho_1 c_1 + \rho_2 c_2 },\\
-		\alpha =  \frac{\rho_1 c_1}{\rho_1 c_1 + \rho_2 c_2 }.
-	\end{gather} 
 	
-	Рассмотрим область пространства $D_1$, ограниченную снизу отражающей поверхностью $B$. 
-	Так как волновое поле, созданное источником, испытывает отражение на границе, то отражённое поле можно приблизительно описать при помощи коэффициента отражения\cite{zhdanov2007}
-	\begin{eqnarray}
-		P_1(r,t') = \Lambda(r) P_0(r,t'), \label{eq:lambda}\\
-		\diff{P_1(r,t') }{n} = - \Lambda(r) \diff{P_0(r,t')}{n}. \label{eq:lambdadnp0}
-	\end{eqnarray}
-	При этом коэффициент отражения на границе двух однородных областей можно вычислить как
+	При отражении акустической волны от границы на поверхности раздела должны быть равны давления и нормальные скорости в обеих средах. \cite{landavshic}
+	
+	\begin{gather}
+		z=0,\label{eq:rc1}\\
+		\lim_{z_0\to 0+0} p(x,y,z_0,\omega) = \lim_{z_0\to 0-0} p(x,y,z_0,\omega), \label{eq:rc2}\\
+		\lim_{z_0\to 0+0} \diff{p(x,y,z_0,\omega)}{z} = \lim_{z_0\to 0-0} \diff{p(x,y,z_0,\omega)}{z}.\label{eq:rc3}
+	\end{gather}
+	Полное поле из условия \eqref{eq:rc2} можно выразить как 
+	%TODO RK 
 	\begin{equation}
-		\Lambda = \frac{\rho_2 c_2-\rho_1 c_1}{\rho_1 c_2+\rho_1 c_1}
-		\label{eq:refl}
+		p(r,\omega) = \begin{cases}
+			p_0(r,\omega)+p_1(r,\omega) \quad r\in D_1, \\
+			p_2(r,\omega) \quad r \in D_2.
+		\end{cases}
 	\end{equation}
+	
+	Таким образом, на границе раздела выполняются условия \eqref{eq:rc1} и \eqref{eq:rc2}, следовательно выполняется равенство
+	\begin{equation}
+		(1+\Lambda)= W e^{i\frac{\omega}{c_2}x\sin \theta_2  - ix\frac{\omega}{c_1}\sin \theta}
+	\end{equation}
+	Так как левая часть последнего равенства не зависит от $x$, то значит  коэффициент перед  $x$ в правой части равен нулю.
+	\begin{equation}
+		\frac{\sin \theta_2}{c_2} = \frac{\sin \theta}{c_1} 
+	\label{eq:snell}
+	\end{equation}
+	Последнее равенство называется законом Снелля.
+	
+	Для гармонической волны в однородной среде плотностью $\rho$ колебательная скорость в звуковой волне записывается \cite{landavshic}
+	\begin{equation}
+		v = \frac{\gradop p}{i\omega \rho}
+	\end{equation}
+	
+	Введём понятие акустического импеданса:
+	\begin{equation}
+		Z = -\frac{p}{v_z}
+	\end{equation}
+	Вычислим импеданс в области $D_1$
+	\begin{equation}
+		Z_1 = -\frac{i\omega \rho_1 c_1 (e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)})}{i\omega(-e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)}) \cos \theta }
+	\end{equation}
+	\begin{equation}
+		Z_1 = -\frac{ \rho_1 c_1 (e^{i\frac{\omega}{c_1}(- z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}( z\cos \theta)})}{(-e^{i\frac{\omega}{c_1}( - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(z\cos \theta)}) \cos \theta }
+		\label{eq:impz1}
+	\end{equation} 
+	Аналогично для области $D_2$
+	\begin{equation}
+		Z_2 = \frac{i\omega c_2 \rho_2 W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}}{i\omega W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}\cos \theta_2}
+	\end{equation}
+	\begin{equation}
+		Z_2 = \frac{ c_2 \rho_2 }{ \cos \theta_2}
+	\end{equation}
+	Из условий \eqref{eq:rc2} и \eqref{eq:rc3} можно сделать вывод, что импеданс на поверхности раздела сред также является непрерывной величиной.
+	\begin{equation}
+		\left.Z_1\right|_{z=0} = \left. Z_2 \right|_{z=0}
+	\end{equation}
+	\begin{equation}
+		\frac{1+\Lambda }{1-\Lambda } = \frac{c_2 \rho_2 \cos \theta }{c_1 \rho_1 \cos \theta_2 }
+	\end{equation}
+	Обозначим импеданс падающей волны за $Z = \frac{c_1\rho_1}{\cos \theta}$:
+	\begin{equation}
+		\frac{1+\Lambda }{1-\Lambda } = \frac{Z_2 }{Z}.
+	\end{equation}
+	Выражая $\Lambda $ из предыдущего выражения получим
+	\begin{equation}
+		\Lambda =\frac{Z_2-Z}{Z_2+Z}.
+		\label{eq:lambdaZ}
+	\end{equation}
+	Подставим в выражение \eqref{eq:lambdaZ} значения для импедансов $Z_2$ и $Z$.
+	\begin{equation}
+		\Lambda = \frac{c_2 \rho_2 \cos \theta - c_1 \rho_1 \cos \theta_2}{c_2 \rho_2 \cos \theta + c_1 \rho_1 \cos \theta_2} 
+		\label{eq:lambda}
+	\end{equation}
+	% DONE ссылку на нормальную литературу.
+	Таким образом, можно записать выражение для продолжения отражённого волнового поля \eqref{eq:modapx}:
+	\begin{equation}
+		P(r',t') = \iint\limits_{B} \left[ \frac{c_2 \rho_2 \cos \theta - c_1 \rho_1 \cos \theta_2}{c_2 \rho_2 \cos \theta + c_1 \rho_1 \cos \theta_2} \cdot \frac{f'\left(t'-\frac{|r'-r|+|r-r_0|}{c_1}\right) }{16\pi^2c_1|r'-r||r-r_0|} (\cos \psi_1 + \cos \psi_2) \right] \,dB,
+	\end{equation}
+	где угол падения $\theta=\psi_1$.
+	Для вычисления значения косинусов углов $\psi_1$, $\psi_2$ можно воспользоваться скалярным произведением:
+	\begin{gather}
+		\cos \psi_2=\frac{(r'-r)\cdot n }{|r'-r|} \\
+		\cos \psi_1 = \frac{(r-r_0)\cdot n }{|r-r_0|}  \label{eq:cosincident}
+	\end{gather}
+	Косинус угла преломления $\theta_2$ можно выразить из закона Снелля \eqref{eq:snell}:
+	\begin{equation}
+		\cos \theta_2 =  \sqrt{1-\frac{c_2^2}{c_1^2}(1-\cos^2 \psi_1)}
+	\end{equation}
+
 
 	%DONE страница 536 (djvu 273) Теория обратных задач
 	% коэффициент отражения 567
+	\begin{comment}
 	\subsection{Приближение Кирхгофа}
-	Рассмотрим волновое поле в частотной области.Оно удовлетворяет уравнению Гельмгольца с различными правыми частями выше и ниже отражающей поверхности $B$ \cite{zhdanov2007}:
+	
+	Рассмотрим волновое поле в частотной области.Оно удовлетворяет уравнению Гельмгольца \eqref{eq:helmholtz} с различными правыми частями выше и ниже отражающей поверхности $B$ \cite{zhdanov2007}:
 	\begin{equation}
 		\nabla^2 p(r,\omega) + \frac{\omega^2}{c^2(r)}p(r,\omega) = \begin{cases}
 			-f(r,\omega), & r \in D_1 \\
@@ -386,38 +674,99 @@
 		\nabla^2 p^s(r,\omega) + \frac{\omega^2}{c^2(r)}p^s(r,\omega) = 0, r \in D_1,\\
 		\nabla^2 p^T(r,\omega) + \frac{\omega^2}{c^2(r)}p^T(r,\omega) =0, r \in D_2
 	\end{eqnarray}
-	%TODO написать про условия Зоммерфельда : зачем они нужны
-	Также предположим, что все волновые поля удовлетворяют условиям излучения Зоммерфельда:
-	\begin{eqnarray}
-		rp(r,\omega) = C < \infty\\
-		\lim\limits_{r\to\infty} |r|\left[\diff{p(r,\omega)}{r} - i\frac{\omega}{c}p(r,\omega)\right] =0
-	\end{eqnarray}
-	Воспользуемся формулой Кирхгофа для выражения волнового поле в точке $r'\in D_1$.
+	%DONE написать про условия Зоммерфельда : зачем они нужны
+
+	
+		При решении обратной задачи сейсмической разведки прямые измерения можно
+	провести только на границе исследуемой области. Поэтому для того чтобы
+	определить распределение волнового поля в текущий момент времени, нужно учесть
+	поведение волнового поля во все предыдущие моменты времени, то есть решить задачу распространения волны от 
+	\(-\infty\) до \(+\infty\) 
+	
+	Рассмотрим однородное уравнение Гельмгольца 
+	\[
+	\Delta u + k^2 u =0
+	\]
+	Оно имеет ненулевое решение, которое обращается в 0 на бесконечности.
+	\[
+	\Im u_0(x) = -\frac{\sin k |x|}{4\pi|x|}
+	\]
+	Для единственности решения, нужно потребовать дополнительных ограничений на решение на бесконечности.
+	Такими ограничениями являются условия Зоммерфельда.
+	\[
+	u(x) = O(|x|^{-1}), \frac{\partial u(x)}{\partial|x|} -iku(x) = o(|x|^{-1}), |x| \to \infty
+	\]
+	Далее будем предполагать, что для отражённого волнового поля эти условия  будут выполняться.
+	%DONE FIXME КИРХГОФ ДЛЯ ЧАСТОТНОЙ ОБЛАСТИ НЕ ВЫВЕДЕН!!!
+	
+	
+	Воспользуемся формулой Кирхгофа \eqref{eq:kirfrq} для выражения волнового поле в точке $r'\in D_1$.
 	\begin{equation}
 		p^s(r',\omega)= \iint\limits_B \left[ p^s(r_b,\omega)\diff{ G(r'|r_B;\omega)}{n}- G(r'|r_B;\omega)\diff{p^s(r_b,\omega)}{n}\right] \,ds_B
-	\end{equation}
-	Учитывая приближения для отражённой волны \ref{eq:lambda} и \ref{eq:lambdadnp0}, можно получить формулу для продолжения отражённого волнового поля в частотной области:
+		\end{equation}
+	Учитывая приближение для отражённой волны \eqref{eq:lambda}, можно получить формулу для продолжения отражённого волнового поля в частотной области:
 	\begin{equation}
 		p^s(r',\omega)= \iint\limits_B \Lambda(r_B) \diff{[p^i(r_B,\omega)\cdot G(r'|r_B,\omega)]}{n} \,ds_B.
 		\label{eq:kirapxfrq}
 	\end{equation}
-	Применим обратное преобразования Фурье к уравнению \ref{eq:kirapxfrq}, чтобы перейти от частотной области к временной.
+	Применим обратное преобразования Фурье к уравнению \eqref{eq:kirapxfrq}, чтобы перейти от частотной области к временной.
 	\begin{equation}
 			P^s(r',t')= \iint\limits_B \Lambda(r_B) \diff{}{n} \left[\int\limits_{-\infty}^{+\infty}P^i(r_B,t)G(r',t'|r_B,t)\,dt\right]\,ds_B.
 			\label{eq:kirapxt}
 	\end{equation} 
-	Теперь можно подставить аналитическое выражение функции Грина \ref{eq:green3d} в формулу \ref{eq:kirapxt}.\cite{fomel}
-	%TODO где свертка?
+	
+	Теперь можно подставить аналитическое выражение функции Грина \eqref{eq:green3d} в формулу \eqref{eq:kirapxt}.\cite{fomel}
+	\begin{equation*}
+		P^s(r',t')= \iint\limits_B \Lambda(r_B) \diff{}{n} \left[\int\limits_{-\infty}^{+\infty}P^i(r_B,t)\frac{1}{4\pi|\bar{r}'-\bar{r}|}
+		\delta\left(t'-t-\frac{|\bar{r}'-\bar{r}|}{c}\right)\,dt\right]\,ds_B
+	\end{equation*} 
+	По свойствам свёртки дельта-функции это выражение можно записать в следующем виде:
+	%DONE где свертка?
 	\begin{equation}
 		P^s(r',t')= \iint\limits_B \Lambda(r_B) \diff{}{n} \left[\frac{f\left(t - \frac{|\bar{r}_B-\bar{r}_s|}{c_1} -\frac{|\bar{r}'-\bar{r}_B|}{c_1} \right)}{16\pi^2|\bar{r}_B-\bar{r}_s|\cdot |\bar{r}'-\bar{r}_B|}\right]\,ds_B.
 		\label{eq:kirapxgt}
 	\end{equation} 
-	%\begin{comment}
+	Учитывая приближение, использованное в выражении \eqref{eq:modapx}, и выражение \eqref{eq:lambda} для коэффициента отражения можно получить следующую формулу
+	\begin{equation}
+		P^s(r',t')= \iint\limits_B  \frac{f'\left(t - \frac{|\bar{r}_B-\bar{r}_s|}{c_1} -\frac{|\bar{r}'-\bar{r}_B|}{c_1} \right)
+		(\cos\psi_1 + \cos\psi_2)
+		(c_2\rho_2\cos\psi_1 - c_1\rho_1 \cos \theta_2 )
+		}{
+		16\pi^2c_1|\bar{r}_B-\bar{r}_s|\cdot |\bar{r}'-\bar{r}_B|
+		(c_2\rho_2\cos\psi_1 + c_1\rho_1 \cos \theta_2 )
+		}\,ds_B
+	\end{equation}
+	где угол падения $\theta=\psi_1$.
+	Для вычисления значения косинусов углов $\psi_1$, $\psi_2$ можно воспользоваться скалярным произведением:
+	\begin{gather}
+		\cos \psi_2=\frac{(r'-r)\cdot n }{|r'-r|} \\
+		\cos \psi_1 = \frac{(r-r_0)\cdot n }{|r-r_0|}  \label{eq:cosincident}
+	\end{gather}
+	Косинус угла преломления $\theta_2$ можно выразить из закона Снелля \eqref{eq:snell}:
+	\begin{equation}
+		\cos \theta_2 =  \sqrt{1-\frac{c_2^2}{c_1^2}(1-\cos^2 \psi_1)}
+	\end{equation}
+	
+	\end{comment}
+
+	
+ %%  Смотри born_approx.tex 
+
+	
+	%TODO: зачем приближение Борна нужно?
+	%TODO ссылки на литру про приближение Борна
 	\subsection{Приближение Борна}
+	В задаче сейсмического моделирования часто возникает необходимость нахождения волнового поля, отражённого от границ ограниченной области (называемой областью неоднородности), где скорость распространения звуковой волны отличается от скорости в окружающем пространстве. Чтобы учесть все области отражающей поверхности, на которые падает волна, созданная источником, воспользуемся приближением Борна для отражённой волны.\cite{zhdanov2007}
+	
+	Рассмотрим задачу нахождения отраженного волнового поля $P_1(r',t)$ от эллиптической границы области неоднородности $D_1$ со скоростью звука  $c_2$ в окружающем пространстве $D$ со скоростью звука $c_1$ в заданном поле $P_0(r,t)$. 
+	
+	
 	Представим скорость распространения волны в виде
 	\begin{equation}
-		\frac{1}{c^2(r)} = \frac{1+a(r)}{c_1^2}.
+		\frac{1}{c^2(r)} = \frac{1+a(r)}{c_1^2},
 	\end{equation}
+	где $a(r)$ -- это функция, не равная нулю внутри области неоднородности поля.
+	  
 	Обозначим значение, обратное по величине скорости волны, как медленность 
 	\begin{gather*}
 		s = \frac{1}{c} \\
@@ -426,7 +775,7 @@
 	\end{gather*}
 	Таким образом функция $a(r)$ является квадратом нормированной аномальной медленности:
 	$$
-		a(r) = \frac{s^2 - s_1^2}{s_1^2} = \frac{\Delta s^2}{s_1^2}
+	a(r) = \frac{s^2 - s_1^2}{s_1^2} = \frac{\Delta s^2}{s_1^2}
 	$$
 	Падающее волновое поле удовлетворяет волновому уравнению в области $D_1$:
 	\begin{equation}
@@ -438,22 +787,22 @@
 		\nabla^2 P_2 - \frac{1}{c_2^2}\diff[2]{P_2}{t} = 0.
 		\label{eq:wavp2}
 	\end{equation}
-	Из условия \ref{eq:p012} непрерывности значения  волнового поля на границе однородной области можно переписать уравнение \ref{eq:wavp2} в виде
+	Из условия \eqref{eq:rc2} непрерывности значения  волнового поля на границе однородной области можно переписать уравнение \eqref{eq:wavp2} в виде
 	\begin{equation}
 		\nabla^2 P_0 + \nabla^2 P_1 - \frac{1}{c_2^2}\diff[2]{P_0}{t} - \frac{1}{c_2^2}\diff[2]{P_1}{t}  = 0.
 		\label{eq:wavp01sum}
 	\end{equation}
-	Подставим в выражение $\nabla^2 P_0$ из уравнения \ref{eq:wavp0}, и
+	Подставим в выражение $\nabla^2 P_0$ из уравнения \eqref{eq:wavp0}, и
 	тогда отражённое волновое поле будет удовлетворять уравнению \cite{bleistein2012mathematical}
 	\begin{equation}
-		 \nabla^2 P_1 - \frac{1}{c_2^2}\diff[2]{P_1}{t}  = - \frac{1}{c_1^2}\diff[2]{P_0}{t} + \frac{1}{c_2^2}\diff[2]{P_0}{t}.
+		\nabla^2 P_1 - \frac{1}{c_2^2}\diff[2]{P_1}{t}  = - \frac{1}{c_1^2}\diff[2]{P_0}{t} + \frac{1}{c_2^2}\diff[2]{P_0}{t}.
 	\end{equation}
 	Так как отражённая волна распространяется в области $D_1$, то она удовлетворяет следующему неоднородному волновому уравнению:
 	\begin{equation}
 		\nabla^2 P_1 - \frac{1}{c_1^2}\diff[2]{P_1}{t}  = \left(\frac{1}{c_2^2} - \frac{1}{c_1^2}\right)\left(\diff[2]{P_0}{t} + \diff[2]{P_1}{t}\right).
 		\label{eq:wavp1inh}
 	\end{equation}
-	Используя введённые ранее обозначения, перепишем уравнение \ref{eq:wavp1inh} следующим образом:
+	Используя введённые ранее обозначения, перепишем уравнение \eqref{eq:wavp1inh} следующим образом:
 	\begin{equation}
 		\nabla^2 P_1 - \frac{1}{c_1^2}\diff[2]{P_1}{t}  = \Delta s^2 \cdot \diff[2]{P_2}{t}.
 	\end{equation}
@@ -465,87 +814,34 @@
 	\begin{equation}
 		P_1(r',t')   = \iiint\limits_{D_1} \int\limits_{-\infty}^{\infty} \Delta s^2 \cdot 	\diff[2]{P_0(r,t)}{t} G(r',t'|r,t)\, dt \, dv.
 	\end{equation}
-	%\end{comment}
-	%DONE: !!! Оттражение от наклонной плоскости!!
-	\begin{comment}
-	\subsection{Отражение от наклонной плоской границы}
-		Если подставить в выражение \ref{eq:kir} функцию Грина \ref{eq:green3d} в явном виде и проинтегрировать по времени, то получится \cite{magisters}
-	\begin{align}
-		P(r',t') =& \frac{1}{4\pi} \iint_B	\left[ \frac{1}{c|r'-r|}\partial_n|r'-r|\frac{\partial \tilde{P}(r,t')}{\partial t'} \right.\nonumber \\
-		&\left. - \partial_n
-		\left(\frac{1}{|r'-r|}\right)\tilde{P}(r,t') +\frac{1}{|r'-r|}\partial_n \tilde{P}(r,t')\right]\,ds
-		\label{eq:kirgreen3d}
-	\end{align}
-	где $\tilde{P}(r,t) = P\left(r,t - \frac{|r'-r|}{c}\right)$ -- волна запаздывания.
 	
-		Пусть поверхность $B$ является плоскостью, заданной уравнением 
-		$$
-			Ax+By+Cz=D,
-		$$ внешняя нормаль которой направлена вдоль вектора $n =(A,B,C)$, то есть $\partial_n = n \cdot \nabla$. Тогда можно аналитически вычислить значение нормальных производных
-		\begin{eqnarray}
-			\partial_n|r'-r| =&\frac{A(x' - x)}{|n|\cdot|r' - r|}+\frac{B(y' - y)}{|n|\cdot |r' - r|} + \frac{C(z' - z)}{|n|\cdot|r' - r|}, \\ 
-			\partial_n\left(\frac{1}{|r'-r|}\right) =&  - \frac{A(x' - x)}{|n|\cdot|r' - r|^3}-\frac{B(y' - y)}{|n|\cdot |r' - r|^3} - \frac{C(z' - z)}{|n|\cdot|r' - r|^3}.
-		\end{eqnarray} 
-		Значения нормальной и временной производных от волны запаздывания можно вычислить численно, заменив производную на её разностный аналог, либо аналитически, если функция волны запаздывания также задана аналитически.
-		
-		Например, пусть волна на отражающей поверхности задана функцией
-		\begin{equation}
-			P(r,t) = \left( 1-2\,{\pi}^{2}{t}^{2} \right) {{\rm e}^{-{\pi}^{2}{t}^{2}}},
-		\end{equation}
-		тогда волна запаздывания будет иметь вид
-		\begin{equation}
-			\tilde{P}(r,t) = \left( 1-2\,{\pi}^{2} \left( t-{\frac {\sqrt {{x}^{2}+{y}^{2}+{z}^{2}
-				}}{c}} \right) ^{2} \right) {{\rm e}^{-{\pi}^{2} \left( t-{\frac {
-							\sqrt {{x}^{2}+{y}^{2}+{z}^{2}}}{c}} \right) ^{2}}}.
-			\label{eq:latewavrick}
-		\end{equation}
-		Для удобства, обозначим $|r| = \sqrt{x^2+y^2+z^2}$. Производная по времени выражается как
-		\begin{align}
-\diff{\tilde{P}(r,t)}{t}=&-4\,{\pi}^{2} \left( t-{\frac { \left| r \right| }{c}} \right) {
-	{\rm e}^{-{\pi}^{2} \left( t-{\frac { \left| r \right| }{c}} \right) ^
-		{2}}}\nonumber\\
-	&-2\, \left( 1-2\,{\pi}^{2} \left( t-{\frac { \left| r \right| }{c
-}} \right) ^{2} \right) {\pi}^{2} \left( t-{\frac { \left| r \right| 
-	}{c}} \right) {{\rm e}^{-{\pi}^{2} \left( t-{\frac { \left| r \right| 
-			}{c}} \right) ^{2}}},
-	\end{align}
-	а производную по пространственной переменной $x$ можно вычислить следующим образом:
-	\begin{align}
-		\diff{\tilde{P}(r,t)}{x} = -4\,{\frac { \left( -2\, \left| r \right| {\pi}^{2}ct+ \left( {c}^{2}{
-					t}^{2}+|r|^2 \right) {\pi}^{2}-3/2\,{c}^{2} \right) 
-				\left( tc- \left| r \right|  \right) x{\pi}^{2}}{|r|{c}^{4}}{{\rm e}^{-{\frac {{\pi}^{2} \left( -tc+ \left| r
-							\right|  \right) ^{2}}{{c}^{2}}}}}}.
-	\label{eq:latewavrickdx}
-	\end{align}
-	
-	Так как функция \ref{eq:latewavrick} симметрична относительно пространственных переменных, то частные производные $\diff{\tilde{P}(r,t)}{y}$ и $\diff{\tilde{P}(r,t)}{z}$
-	будут иметь вид, аналогичный выражению \ref{eq:latewavrickdx}.  
-	Значение производной вдоль внешней нормали плоскости $B$ можно вычислить как 
+	Рассмотрим вычисление отражённого поля на примере неоднородности в форме эллипсоида. Пусть эллиптическая граница области неоднородности задана уравнением:
 	\begin{equation}
-		\diff{\tilde{P}(r,t)}{n} = \frac{A}{|n|} \diff{\tilde{P}(r,t)}{x} +
-		  \frac{B}{|n|} \diff{\tilde{P}(r,t)}{y} +
-		   \frac{C}{|n|} \diff{\tilde{P}(r,t)}{z},
+		\frac{x^2}{A^2} + \frac{y^2}{B^2} + \frac{z^2}{C^2} = 1
 	\end{equation}
-	где $|n| = \sqrt{A^2+B^2+C^2}$.
-		%Подставим значения производных в выражение \ref{eq:kirgreen3d}
-		%\begin{equation}
-		%	P(r',t') = \frac{1}{4\pi} \iint\limits_B
-		%	\left[\frac{z'-z}{|r'-r|^2}\left(\frac{1}{c}\frac{\partial\tilde{P}(r',t')}{\partial t'}+\frac{\tilde{P}(r',t')}{|r'-r|}\right) - \frac{1}{|r'-r|}\frac{\partial\tilde{P}(r',t')}{\partial z}\right]\,ds
-		%\end{equation}
-
-\end{comment}
 	
-
+	Перейдём в обобщённую полярную систему координат:
+	\begin{align*}
+		x &= A \rho \cos \phi \cos \theta, \\
+		y &= B \rho \sin \phi \cos \theta, \\
+		z &= C \rho \sin \theta. 
+	\end{align*}
+	Таким образом значение поля, отражённого от эллипсоида, можно вычислить при помощи следующей формулы:
+	\begin{equation*}
+		P_1(r_0',t') = \frac{\Delta s^2}{4\pi} \int_{0}^{2\pi} \int_{-\frac{\pi}{2}}^{\frac{\pi}{2}} \int_{0}^{1} \frac{ABC \rho^2 \cos \theta}{|r_0'-r|} \diff[2]{}{t}P_0(r,t' - \frac{|r_0'-r|}{c_2}) \,d\rho \, d\phi \, d \theta.
+	\end{equation*}
+	
+	
 	\section{Миграция}
 	\subsection{Постановка задачи сейсмической миграции}
-	%FIXME: постановка задачи
+	%TODO FIXME: постановка задачи
 	
 	Пусть возбуждение и регистрация колебаний происходит на плоской горизонтальной поверхности. Пусть
 	существует некоторая неизвестная граница, которую мы хотим определить, при этом распределение скорости в пространстве
 	между свободной поверхностью и границей считается известным. 
 	
-	Такую задачу можно свести к задаче нахождения обращенного продолжения $W(r',t')$ ($t' = T-t$) поля $P(r,t)$ ($r=(x,y,0),t\in[0,T]$), зарегистрированного на поверхности $z=0$ \cite{petrashen}. 
-	Под обращенным продолжением понимается решение уравнения
+	Такую задачу можно свести к задаче нахождения обращённого продолжения $W(r',t')$ ($t' = T-t$) поля $P(r,t)$ ($r=(x,y,0),t\in[0,T]$), зарегистрированного на поверхности $z=0$ \cite{petrashen}. 
+	Под обращённым продолжением понимается решение уравнения
 	\begin{equation}
 		\Delta W + \frac{1}{c^2} \diff[2]{W}{t} = 0
 	\end{equation}
@@ -556,7 +852,7 @@
 		 \left.W\right|_{z=0} = P(r,t).
 	\end{gather*}
 	
-	Рассмотрим гипотетическую волну, двигающуюся вверх к поверхности наблюдения с направлением, которое в определённый момент времени (например, при $t = 0$) совпадает с одной из отражающих границ. Далее, очевидно, что волна будет распространяться вдоль тех же лучей, что и реальное отражённое поле <<нулевого удаления>>, которое было зарегистрировано совмещёнными источниками и приёмниками, для времени $t>0$. Это связано с тем, что лучи первичной и отражённой волн должны совпадать, если положения источников и приёмников совпадают. Это возможно только в том случае, если соответствующая траектория луча нормальна к отражающей границе. Таким образом, как и предполагаемая волна, которую мы называем восходящей волной Клербо, и реальное отражённое волновое поле, зарегистрированное совмещёнными источниками и приёмниками, они должны распространяться вдоль одних и тех же лучевых путей. Тем не менее, волне Клербо потребуется пятьдесят минут, чтобы достичь определённой точки на поверхности наблюдения, куда придёт реальная отражённая волна, которая должна пройти это расстояние дважды. Тем не менее, обе волны достигнут любой точки поверхности наблюдения одновременно, если предположить, что скорость волны Клербо в среде в два раза меньше, чем скорость реальной волны. \cite{zhdanov2007}
+	Рассмотрим гипотетическую волну, двигающуюся вверх к поверхности наблюдения с направлением, которое в определённый момент времени (например, при $t = 0$) совпадает с одной из отражающих границ. Далее, очевидно, что волна будет распространяться вдоль тех же лучей, что и реальное отражённое поле <<нулевого удаления>>, которое было зарегистрировано совмещёнными источниками и приёмниками, для времени $t>0$. Это связано с тем, что лучи первичной и отражённой волн должны совпадать, если положения источников и приёмников совпадают. Это возможно только в том случае, если соответствующая траектория луча нормальна к отражающей границе. Таким образом, как и предполагаемая волна, которую мы называем восходящей волной Клербо, и реальное отражённое волновое поле, зарегистрированное совмещёнными источниками и приёмниками, они должны распространяться вдоль одних и тех же лучевых путей. Тем не менее волне Клербо потребуется пятьдесят минут, чтобы достичь определённой точки на поверхности наблюдения, куда придёт реальная отражённая волна, которая должна пройти это расстояние дважды. Тем не менее обе волны достигнут любой точки поверхности наблюдения одновременно, если предположить, что скорость волны Клербо в среде в два раза меньше, чем скорость реальной волны. \cite{zhdanov2007}
 
 	\subsection{Интеграл Рэлея}
 	Для восстановления волн, которые распространяются по направлению к поверхности наблюдения, в качестве фундаментального решения нужно использовать функцию, сопряжённую к функции Грина волнового уравнения.
@@ -581,7 +877,7 @@
 	\iint_{S}\int_{-\infty}^{\infty}\widetilde{G}\left({r}^{\prime},t^{\prime}|{r},t\right)\frac{\partial}{\partial n}P({r},t)d t\,d s = -\iint_{S}\int_{-\infty}^{\infty}P({ r},t){\frac{\partial}{\partial n}}\widetilde{G}\left({ r}^{\prime},t^{\prime}|{ r},t\right)\,d t\,d s.
 	\label{eq:req0}
 	\end{equation}
-Подставляя соотношение \ref{eq:req0} в \ref{eq:kir} можно модифицировать интеграл Кирхгофа в выражение, 
+Подставляя соотношение \eqref{eq:req0} в \eqref{eq:kir} можно модифицировать интеграл Кирхгофа в выражение, 
 известное как интегральная формула Рэлея:
 \begin{equation}
 P({ r}^{\prime},t^{\prime})=2\iint_{S}\int_{-\infty}^{\infty}P({ r},t)\frac{\partial}{\partial z}\widetilde{G}\left({ r}^{\prime},t^{\prime}|{ r},t\right)d t d s.
@@ -590,88 +886,241 @@ P({ r}^{\prime},t^{\prime})=2\iint_{S}\int_{-\infty}^{\infty}P({ r},t)\frac{\par
 	По принципам восстановления изображения среды на основе миграционного преобразования, необходимо получить изображение отражающих границ путём построения распределения восходящего волнового поля в нижнем полупространстве в момент $t' = 0$. Для среды с постоянной волновой скоростью интеграл Релэя будет иметь вид
 	\begin{equation}
 		P(r',0) = \frac{1}{2\pi} \iint_S \int_{-\infty}^{\infty} P(r,t) \frac{\partial}{\partial z} 
-		\left[ \frac{\delta(2|r'-r|/c -t)}{|r'-r|}\right]\,dt\,ds
+		\left[ \frac{\delta(2|r'-r|/c -t)}{|r'-r|}\right]\,dt\,ds.
 		\label{eq:rayleighsingular}
 	\end{equation}
-	Соотношение \ref{eq:rayleighsingular} нельзя использовать для построения практических алгоритмов миграции из-за присутствия сингулярности. Вынося производную за знаки интегрирования и вычисляя свёртку по времени с дельта-функцией, получим следующее выражение:\cite{golubev}
+	Соотношение \eqref{eq:rayleighsingular} нельзя использовать для построения практических алгоритмов миграции из-за присутствия сингулярности. Вынося производную за знаки интегрирования и вычисляя свёртку по времени с дельта-функцией, получим следующее выражение\cite{golubev}:
 	\begin{equation}
 				P(r',0) = \frac{1}{2\pi}\frac{\partial}{\partial z} \iint_S   
 		\left[ \frac{P(r,2|r'-r|/c)}{|r'-r|}\right]\,ds
 		\label{eq:rayleighgood}
 	\end{equation}
 	%TODO:  Написать про алгоритм?
-	\begin{comment}
+	%\begin{comment}
+	%TODO постановка задачи и численное решение
 
 	\section{Результаты расчётов и анализ результатов}
 	В данной работе для расчётов была разработана программа на языке C++, 
 	численное нахождение определённых интегралов
-	производилось методом трапеций. В программе можно задавать максимальное и минимальное количество используемых ячеек памяти.
+	производилось методом прямоугольников. В программе можно задавать максимальное и минимальное количество используемых ячеек памяти.
 	
-	Рассмотрим область пространства $D = [0,X]\times [0,Y] \times [-Z,0]$ в течение отрезка времени $[0,T]$. При дальнейших расчётах, будем полагать 
-	$X = 1$, $Y=1$ и $T=2$. Пусть точечный источник колебаний расположен на поверхности наблюдения $z=0$ в середине рассматриваемой области: $x_s = 0.5$, $y_s = 0.5$.
-	Пусть точечный источник колебаний имеет функцию импульса Рикера вида 
+	Рассмотрим область пространства $D = [0,X]\times [0,Y] \times [0,Z]$ в течение отрезка времени $[0,T]$. При дальнейших расчётах для данной задачи, будем полагать 
+	$X = 50$, $Y=50$ и $T=1$. Пусть точечный источник колебаний расположен на поверхности наблюдения $z_0=0$ в середине рассматриваемой области: $x_0 = 25$, $y_0 = 25$. Необходимо определить значение отражённого волнового поля на поверхности $z=0$. 
+	
+	Можем положить, что точечный источник колебаний имеет функцию импульса в виде импульса Рикера:
 	\begin{equation}
-		F(t) = P_0 \cdot (1-2\pi^2 f^2 t^2)\exp(-\pi^2 f^2 t^2)
-	\end{equation}  
+		f(t) = P_0 \cdot (1-2\pi^2 \nu^2 t^2)\exp(-\pi^2 f^2 t^2).
+	\end{equation}
+	При дальнейших расчётах используем следующие параметры импульса источника: 
+	\begin{align*}
+		\nu &=10, \\
+		P_0 & = 1.
+	\end{align*}
 	
-	Расчёты были выполнены с использованием следующих значений параметров источника и среды:
+	\subsection{Отражение от плоской горизонтальной границы} \label{sect:horizontal}
+	
+	Пусть на глубине $h_1 = 2$ расположена плоская горизонтальная граница раздела сред со скоростями звука $C_1$ и $C_2$. 
+	Расчёты были выполнены с использованием следующих значений скоростей распространения волны внутри слоёв среды:
 \begin{align*}
-	C_1 &= 1 \\
-	C_2 &= 0.5 \\
-	f &=10 \\
-	P_0 & = 1
+	C_1 &= 108 \\
+	C_2 &= 140 
 \end{align*}
-	\subsection{Отражение от плоской границы}
 	
-	
-	\begin{figure}[h]
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{smooth_single_seism.png}
+	\caption{Значение отражённого от границы слоёв поля давления на поверхности наблюдения $z = 0$ для различных моментов времени $t\in [0,1]$ в сечении $y=25$.}
+	\label{fig:single_hor}
+\end{figure}
+%    ...
+	На рисунке \ref{fig:single_hor} представлена сейсмограмма колебаний, зарегистрированных у поверхности земли. На графике ось $x$ направлена вправо, ось $t$ направлена  вниз.
+	Из рисунка видно, что волна, созданная источником колебаний на поверхности земли, отражается от границы раздела однородных слоёв и достигает поверхности земли за время $t_1 = 0.037$ и распространяется по поверхности со скоростью $C_1$. 
+	\subsection{Отражение от границ горизонтально-слоистой среды}
+	Далее рассмотрим случай трёхслойной и четырёхслойной среды. Пусть верхние слои имеют соответственную толщину $h_1 = 2$, $h_2 = 18$, $h_3 = 24$, а нижний слой занимает оставшееся полупространство. Скорость звука в каждом из слоёв соответственно равна:
+	\begin{align*}
+		C_1 &= 108,\\
+		C_2 &= 140,\\
+		C_3 &= 180,\\
+		C_4 & = 216.
+	\end{align*}
+	\begin{figure}[H]
 	\begin{subfigure}{.5\textwidth}
-		\includegraphics[width=1\textwidth]{kflat0.png}
-		\subcaption{Изображение сечения $y_r = 0$}
+		\centering
+		\includegraphics[width=\textwidth]{smooth_double_far_seism.png}
+		\caption{Отражение от двух границ слоёв.}
+		\label{fig:multi_hor2}
 	\end{subfigure}
 	\begin{subfigure}{.5\textwidth}
-		\includegraphics[width=\textwidth]{kflat0.5.png}
-		\subcaption{Изображение сечения $y_r = 0.5$}
+		\centering
+		\includegraphics[width=\textwidth]{smooth_triple_far_seism.png}
+		\caption{Отражение от трёх границ слоёв.}
+		\label{fig:multi_hor3}
 	\end{subfigure}
+	\caption{Значение поля давления, отражённого от нескольких границ слоёв, на поверхности наблюдения $z = 0$ для различных моментов времени $t\in [0,1]$ в сечении $y=25$.}
+	\label{fig:multi_hor}
+\end{figure}
+
+	На рисунках \ref{fig:multi_hor2} и \ref{fig:multi_hor3} представлены сейсмограммы колебаний, зарегистрированных у поверхности земли. На графиках ось $x$ направлена вправо, ось $t$ направлена  вниз. 
 	
-	\caption{Изображение отражённой волны, созданной точечным источником колебаний в трёхмерном пространстве.   
-	}
-	\label{fig:kmodflatxt}
-	\end{figure}
-	На рисунке \ref{fig:kmodflatxt} изображено распределение давления на поверхности наблюдения в каждый момент времени на прямой $y=y_r$.
-	Пространственная ось $Ox$ направлена влево, временная ось $Ot$ направлена вниз. 
-	\begin{figure}[h]
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{slicet1.png}
-			\subcaption{$t=1$}
-		\end{subfigure}
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{slicet1.1.png}
-			\subcaption{$t=1.1$}
-		\end{subfigure}
-		\label{fig:kmodflatxy}
-		\caption{Распределение давления на поверхности наблюдения в момент времени $t$.}
-	\end{figure}
-	%TODO: Результаты отражения от наклонной плоскости
-	%TODO: Результаты плоской миграции
-	\begin{figure}[h]
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{migflatxyt1.png}
-			\subcaption{$t=1$}
-		\end{subfigure}
-		\begin{subfigure}{0.5\textwidth}
-			\includegraphics[width=\textwidth]{migflatxzy0.5.png}
-			\subcaption{$y=0.5$}
-		\end{subfigure}
-		\caption{Результат сейсмической миграции.}
-	\end{figure}
-	%TODO: результаты наклонной миграции
+	Из рисунка \ref{fig:multi_hor2} видно, что, помимо волны, отразившейся от первой границы, в момент времени $t_2 = 0.29$ поверхности $z=0$  достигает волна, отразившаяся от второй границы между слоями. Амплитуда второй волны ниже амплитуды первой из-за большей удалённости данной границы от поверхности наблюдения. 
 	
-	\end{comment}
+	На рисунке \ref{fig:multi_hor3} волна отражённая от третьей границы в момент времени $t_3 = 0.56$.
+	
+	\subsection{Отражение от плоской наклонной границы}
+		
+Рассмотрим случай двухслойной среды, когда граница между слоями является наклонная плоскость. Значения скоростей внутри каждого слоя зададим равными 
+\begin{align*}
+	C_1 &= 72, \\
+	C_2 &= 120.
+\end{align*}
+	Пусть граница между слоями задана уравнением (ось $z$ направлена вниз):
+	\begin{equation}
+		z = 0.35 x + 0.35 y + 1.
+	\end{equation}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\textwidth]{smooth_tilted_seism.png}
+		\caption{Значение поля давления, отражённого от наклонной границы, на поверхности наблюдения $z = 0$ для различных моментов времени $t\in [0,1]$ в сечении $y=25$.}
+		\label{fig:tilt}
+	\end{figure}
+	На рисунке \ref{fig:tilt} изображена сейсмограмма волнового поля, отражённого от наклонной плоской границы раздела сред. Волна, порождённая точечным источником, отражается от наклонной плоскости и достигает поверхности наблюдения за время $t_4 = 0.43$. % TODO как волна сместилась?
+	
+	\subsection{Отражение от сферической неоднородности}
+	Рассмотрим случай, когда отражающая граница не является плоской, а представляет собой границу сферы. Пусть задана область неоднородности, границы которой заданы уравнением 
+	\begin{equation}
+		(x-x_0)^2 + (y-y_0)^2 + (z-z_0)^2 = R^2.
+	\end{equation}  
+	Центр сферы расположен в точке $x_0 = 25, y_0 = 25,z_0 = 25$.
+	Пусть в окружающем пространстве задана скорость звука $C_1 = 72$, а внутри области неоднородности задана скорость распространения волны $C_5 = 8$.
+	
+	\begin{figure}[H]
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{sphere_3_seism.png}
+			\caption{$R=3$.}
+			\label{fig:sphere3}
+		\end{subfigure}
+		\begin{subfigure}{.5\textwidth}
+			\centering
+			\includegraphics[width=\textwidth]{sphere_5_seism.png}
+			\caption{$R=5$.}
+			\label{fig:sphere5}
+		\end{subfigure}
+		\caption{Сейсмограмма волнового поля отражённого от сферической границы с различными радиусами области неоднородности.}
+	\end{figure}
+	
+	На рисунках \ref{fig:sphere3} и \ref{fig:sphere5} изображены сейсмограммы  колебаний, отражённых от сферической границы области неоднородности.
+	Волна, созданная источником колебаний на поверхности наблюдения, достигает отражателя и возвращается на поверхность $z=0$ за время $t_5 = 0.35$ при $R=3$ и $t_5=0.35$ при $R=5$.
+	При увеличении радиуса области неоднородности  амплитуда и продолжительность увеличивается. 
+	  
+	
+	\begin{comment}
+	\subsection{Отражение в горизонтально-слоистой среде с эллиптическим включением}
+	Рассмотрим область пространства $D = [0,X]\times [0,Y] \times [0,Z]$ в течение отрезка времени $[0,T]$. Пусть среда разделена на горизонтальные слои с заданной толщиной, в каждом из которых задана скорость распространения звуковой волны (рисунок \ref{fig:layers}). Внутри третьего слоя задана неоднородность в форме эллипсоида: 
+	\begin{equation}
+		\frac{(x-x_0)^2}{A^2} + \frac{(y-y_0)^2}{B^2} + \frac{(z-z_0)^2}{B^2} = 1.
+	\end{equation}
+	На поверхности через равные промежутки расположены совмещённые источники и приёмники сейсмических колебаний. Необходимо вычислить значение волнового поля в точках расположения приёмников на поверхности.  
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.5\textwidth]{layers.pdf}
+		\caption{Модель слоистой среды с эллиптическим включением.}
+		\label{fig:layers}
+	\end{figure}
+	
+	Пусть мощности слоёв и скорости звука в однородных слоях соответственно равны: 
+	\begin{gather*}
+		h_1 = 200, c_1 = 1800, \\
+		h_2=199, c_2 = 3000,\\
+		h_3=297, c_3 = 4500,\\
+		c_4 = 5400.
+	\end{gather*}
+	Значения параметров эллиптической неоднородности:
+	\begin{gather*}
+		x_0 = 2610,\\
+		y_0 = 493, \\
+		A = 100, \\
+		B = 45.
+	\end{gather*}
+\end{comment}
+	\subsection{Сейсмическое изображение горизонтальной плоской границы}
+	Теперь рассмотрим задачу нахождения расположения горизонтальной границы по известному значению отражённого волнового поля на поверхности наблюдения $z=0$. Пусть известно волновое поле на поверхности и распределение скоростей в каждом из слоёв. Необходимо определить глубину, на которой находится отражающая граница. 
+	
+	 В качестве начальных данных используем значения волнового поля и распределения скоростей, рассчитанные ранее в разделе \ref{sect:horizontal}. 
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\textwidth]{mig_horizontal_single.png}
+		\caption{Сейсмическое изображение среды с горизонтальной отражающей границей в сечении $y=25$.}
+		\label{fig:mig_hor}
+	\end{figure}
+	
+	На рисунке \ref{fig:mig_hor} показано сейсмическое изображение среды, полученное при помощи преобразования сейсмической миграции. 
+	На графике ось $x$ направлена вправо, ось $z$ направлена вниз.
+	На изображении видно, что отражённая волна, зарегистрированная на поверхности наблюдения, в момент отражения находилась на глубине $z = 2$.
+	
+	
+	\subsection{Сейсмическое изображение наклонной плоской границы}
+	
+	Далее, рассмотрим задачу нахождения плоской наклонной по известному значению отражённого волнового поля на поверхности наблюдения $z=0$.
+	Пусть известно волновое поле на поверхности и распределение скоростей в каждом из слоёв. Необходимо определить положение наклонной границы в пространстве.
+	
+	На поверхности наблюдения расположены точечные источники колебаний, совмещённые с сейсмическими приёмниками. 
+	Сейсмограмма, полученная при такой конфигурации источников и приёмников, называется сейсмограммой нулевого удаления \cite{timoshin}. 
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.7\textwidth]{tilt15c36_centr_seism.png}
+		\caption{Сейсмограмма нулевого удаления волнового поля, отражённого от наклонной отражающей границы, при совмещённых источниках  в сечении $y=25$.}
+		\label{fig:mig_tilt_seism}
+	\end{figure}
+	Рассчитаем значения отражённого поля на поверхности, при следующих параметрах среды: 
+	\begin{align*}
+		C_1 &= 36, \\
+		C_2 &= 60,
+	\end{align*}
+	наклонная граница между слоями задана уравнением:
+	\begin{equation}
+		z=1+0.15 x+0.15 y.
+		\label{eq:mig_mod}
+	\end{equation}
+	На рисунке \ref{fig:mig_tilt_seism} изображена сейсмограмма полученного волнового поля.
+	По смоделированным значениям при помощи преобразования миграции можно определить положение отражающей границы между однородными слоями.  
+	
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.9\textwidth]{mig_tilted_central_ok.png}
+		\caption{Сейсмическое изображение нулевого удаления среды с наклонной отражающей границей в сечении $y=25$.}
+		\label{fig:mig_tilt}
+	\end{figure}
+	На рисунке \ref{fig:mig_tilt} показано сейсмическое изображение среды, полученное при помощи преобразования сейсмической миграции. 
+	На графике ось $x$ направлена вправо, ось $z$ направлена вниз. На изображении видно, что волны, порождённые источниками на поверхности наблюдения, отражаются от наклонной плоскости.  По данному сейсмическому изображению можно определить коэффициент наклона плоскости вдоль оси $x$: $m = \frac{11-5}{45-5} = 0.15$, что соответствует уравнению \eqref{eq:mig_mod}. 
+	
+	%TODO: 
+	
 	\clearpage
 	
 	
 	\section*{Заключение} \addcontentsline{toc}{section}{Заключение}
+	В данной работе была построена модель распространения  акустической волны в некоторой области
+	 пространства, при помощи записи решения волнового уравнения в интегральной форме и продолжения поля при
+	 помощи интеграла Кирхгофа. Была показана связь между амплитудой волны, достигающей границы раздела
+	  однородных сред, и амплитудой волны, отражённой от границы раздела сред, при помощи коэффициента
+	  отражения.
+	
+	Была выполнена численная программная реализация модели и продемонстрирована её работоспособность на примерах решения задач моделирования отражённого волнового поля от слоистой среды для случаев: одной горизонтальной границы, нескольких горизонтальных границ, плоской наклонной границы, сферической границы.
+	
+	%TODO
+	%	Была выполнена численная реализация модели и продемонстрирована её работоспособность на примерах 
+	%  Рассмотрена задача нахождения сейсмического изображения среды по значениям поля на поверхности наблюдения 
+	
+	
+	
+	\begin{comment}
+	Я подтверждаю, что настоящая работа написана мною лично, не нарушает интеллектуальные права третьих лиц и не содержит сведения, составляющие государственную тайну.
+	
+	\hspace{0.5\textwidth}\hrulefill / Яковлев О. В.
+	\end{comment}
 	
 	\newpage
 	
