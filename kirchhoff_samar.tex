@@ -1,0 +1,55 @@
+Для определения в точке $r'$ решения $P(r',t')$ уравнения \ref{eq:wav} введём локальное время $t^* = t - t' + \frac{|r'-r|}{c}$. \cite{samarskii}
+Перейдём к сферической системе координат
+$$
+	u(r,\varphi,\theta,t) = P(r\cos \varphi \cos \theta ,r\sin \varphi \cos \theta,r \sin \theta,t).
+$$
+$$
+	U(r,\varphi,\theta,t) = u(r,\varphi,\theta,t^*).
+$$
+ Тогда оператор Лапласа будет иметь вид:
+\begin{equation}
+	\Delta u={\frac{\partial^{2}u}{\partial r^{2}}}+{\frac{2}{r}}{\frac{\partial u}{\partial r}}+{\frac{1}{r^{2}\sin\theta}}{\frac{\partial}{\partial\theta}}\left(\sin\theta{\frac{\partial u}{\partial\theta}}\right)+{\frac{1}{r^{2}\sin^{2}\theta}}{\frac{\partial^{2}u}{\partial\varphi^{2}}}
+\end{equation}
+Выразим производные функции $u$ через производные $U$:
+\begin{gather}
+	u_{r}=U_{r^{*}}+{\frac{1}{a}}\,U_{t^{*}}, \\
+	u_{r r}=U_{r^{*}r^*}+{\frac{2}{a}}\,U_{r^{*}t}+{\frac{1}{a^{2}}}\,U_{t^{*}t},\\
+	u_\theta = U_\theta \\
+	u_\varphi = U_\varphi \\
+	u_t = U_{t^*} \\
+	u_{\theta\theta} = U_{\theta\theta} \\
+	u_{\varphi\varphi} = U_{\varphi\varphi} \\
+	u_{tt} = U_{t^*t^*} 
+\end{gather}
+Уравнение \ref{eq:wav} переходит в 
+\begin{equation}
+	\Delta U=-\frac{2}{a r^{*}}\frac{\partial}{\partial r^{*}}\,(r^{*}U_{t^{*}})-F\,(r^{*},\,\theta^{*},\,t^{*}).
+\end{equation}
+Рассматривая уравнение как уравнение Лапласа с параметром $t^*$ воспользуемся формулой Грина \cite{samarskii}:
+\begin{equation}
+	4\pi U\left(M_{0},\,0\right)=\iint_S\left[\frac{1}{r^{\ast}}\,\frac{\partial U}{\partial n}-U\,\frac{\partial}{\partial n}\left(\frac{1}{r^{\ast}}\right)\right]dS + \iiint_T \frac{2}{c r^{*2}} \diff{}{r^*} \left(r^*\diff{U}{t^*}\right) d\tau +
+	\iiint_T \frac{F}{r^*} d\tau
+\end{equation}
+Обозначим $$I = \iiint_T \frac{2}{cr^{*2}} \diff{}{r^*} \left(r^*\diff{U}{t^*}\right) d\tau.$$
+Так как $r^*=0$ является сингулярной точкой, вычислим предел
+\begin{equation}
+	I = \lim\limits_{\varepsilon\to 0} \iiint_{T \setminus T_\varepsilon} \frac{2}{cr^{*2}} \diff{}{r^*} \left(r^*\diff{U}{t^*}\right) d\tau,
+\end{equation}
+где $T_\varepsilon$ -- шар радиуса $\varepsilon$. Подставим якобиан сферической сисетмы координат
+\begin{equation}
+	d\tau = r^{*2} \sin \theta\, dr\,d\theta \, d\varphi,
+\end{equation}
+\begin{equation}
+	I = \lim\limits_{\varepsilon\to 0} \iiint_{T \setminus T_\varepsilon} \frac{2}{c} \diff{}{r^*} \left(r^*\diff{U}{t^*}\right) \sin \theta\, dr\,d\theta \, d\varphi.
+\end{equation}
+Проинтегрируем по $r$
+\begin{equation}
+	I =  \iint_{S} \frac{2}{cr^*} \left(\diff{U}{t^*}\right) \cos(n,r) dS - \lim\limits_{\varepsilon\to 0} \iint_{S_\varepsilon} \frac{2}{cr^*} \left(\diff{U}{t^*}\right) \cos(n,r) dS
+\end{equation}
+Так как радиус $T_\varepsilon$ стремится к нулю, то и предел в предыдущем выражении также равен нулю.
+Таким образом получаем интегральную формулу 
+\begin{equation}
+	u\left(M_{0},t_{0}\right)=\frac{1}{4\pi}\iint_{S}^{}\left\{\frac{1}{r}\left[\frac{\partial u}{\partial n}\right]-\left[u\right]\frac{\partial}{\partial n}\left(\frac{1}{r}\right)+\frac{1}{a r}\left[\frac{\partial u}{\partial t}\right]\frac{d r}{d n}\right\}d S_{M}+\iiint_T\frac{[f]}{r}\,d\tau
+	\label{eq:kirsam}
+\end{equation}
+

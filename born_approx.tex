@@ -1,0 +1,122 @@
+	\begin{comment}
+	\subsection{Приближение Борна}
+	Представим скорость распространения волны в виде
+	\begin{equation}
+		\frac{1}{c^2(r)} = \frac{1+a(r)}{c_1^2}.
+	\end{equation}
+	Обозначим значение, обратное по величине скорости волны, как медленность 
+	\begin{gather*}
+		s = \frac{1}{c} \\
+		s_1 = \frac{1}{c_1} \\
+		s_2 = \frac{1}{c_2}
+	\end{gather*}
+	Таким образом функция $a(r)$ является квадратом нормированной аномальной медленности:
+	$$
+	a(r) = \frac{s^2 - s_1^2}{s_1^2} = \frac{\Delta s^2}{s_1^2}
+	$$
+	Падающее волновое поле удовлетворяет волновому уравнению в области $D_1$:
+	\begin{equation}
+		\nabla^2 P_0 - \frac{1}{c_1^2}\diff[2]{P_0}{t} = 0.
+		\label{eq:wavp0}
+	\end{equation}
+	Преломлённое волновое поле также является решением волнового уравнения, но в области $D_2$ с другой скоростью звука:
+	\begin{equation}
+		\nabla^2 P_2 - \frac{1}{c_2^2}\diff[2]{P_2}{t} = 0.
+		\label{eq:wavp2}
+	\end{equation}
+	Из условия \ref{eq:rc2} непрерывности значения  волнового поля на границе однородной области можно переписать уравнение \ref{eq:wavp2} в виде
+	\begin{equation}
+		\nabla^2 P_0 + \nabla^2 P_1 - \frac{1}{c_2^2}\diff[2]{P_0}{t} - \frac{1}{c_2^2}\diff[2]{P_1}{t}  = 0.
+		\label{eq:wavp01sum}
+	\end{equation}
+	Подставим в выражение $\nabla^2 P_0$ из уравнения \ref{eq:wavp0}, и
+	тогда отражённое волновое поле будет удовлетворять уравнению \cite{bleistein2012mathematical}
+	\begin{equation}
+		\nabla^2 P_1 - \frac{1}{c_2^2}\diff[2]{P_1}{t}  = - \frac{1}{c_1^2}\diff[2]{P_0}{t} + \frac{1}{c_2^2}\diff[2]{P_0}{t}.
+	\end{equation}
+	Так как отражённая волна распространяется в области $D_1$, то она удовлетворяет следующему неоднородному волновому уравнению:
+	\begin{equation}
+		\nabla^2 P_1 - \frac{1}{c_1^2}\diff[2]{P_1}{t}  = \left(\frac{1}{c_2^2} - \frac{1}{c_1^2}\right)\left(\diff[2]{P_0}{t} + \diff[2]{P_1}{t}\right).
+		\label{eq:wavp1inh}
+	\end{equation}
+	Используя введённые ранее обозначения, перепишем уравнение \ref{eq:wavp1inh} следующим образом:
+	\begin{equation}
+		\nabla^2 P_1 - \frac{1}{c_1^2}\diff[2]{P_1}{t}  = \Delta s^2 \cdot \diff[2]{P_2}{t}.
+	\end{equation}
+	Следовательно, решение этого неоднородного дифференциального уравнения можно выразить через функцию Грина:
+	\begin{equation}
+		P_1(r',t')   = \iiint\limits_{D_1} \int\limits_{-\infty}^{\infty} \Delta s^2 \cdot \left(\diff[2]{P_0(r,t)}{t}+\diff[2]{P_1(r,t)}{t}\right) G(r',t'|r,t)\, dt \, dv.
+	\end{equation}
+	Приближение Борновского типа состоит в том, чтобы положить отражённое поле под знаком интеграла равным нулю:
+	\begin{equation}
+		P_1(r',t')   = \iiint\limits_{D_1} \int\limits_{-\infty}^{\infty} \Delta s^2 \cdot 	\diff[2]{P_0(r,t)}{t} G(r',t'|r,t)\, dt \, dv.
+	\end{equation}
+\end{comment}
+%DONE: !!! Оттражение от наклонной плоскости!!
+\begin{comment}
+	\subsection{Отражение от наклонной плоской границы}
+	Если подставить в выражение \ref{eq:kir} функцию Грина \ref{eq:green3d} в явном виде и проинтегрировать по времени, то получится \cite{magisters}
+	\begin{align}
+		P(r',t') =& \frac{1}{4\pi} \iint_B	\left[ \frac{1}{c|r'-r|}\partial_n|r'-r|\frac{\partial \tilde{P}(r,t')}{\partial t'} \right.\nonumber \\
+		&\left. - \partial_n
+		\left(\frac{1}{|r'-r|}\right)\tilde{P}(r,t') +\frac{1}{|r'-r|}\partial_n \tilde{P}(r,t')\right]\,ds
+		\label{eq:kirgreen3d}
+	\end{align}
+	где $\tilde{P}(r,t) = P\left(r,t - \frac{|r'-r|}{c}\right)$ -- волна запаздывания.
+	
+	Пусть поверхность $B$ является плоскостью, заданной уравнением 
+	$$
+	Ax+By+Cz=D,
+	$$ внешняя нормаль которой направлена вдоль вектора $n =(A,B,C)$, то есть $\partial_n = n \cdot \nabla$. Тогда можно аналитически вычислить значение нормальных производных
+	\begin{eqnarray}
+		\partial_n|r'-r| =&\frac{A(x' - x)}{|n|\cdot|r' - r|}+\frac{B(y' - y)}{|n|\cdot |r' - r|} + \frac{C(z' - z)}{|n|\cdot|r' - r|}, \\ 
+		\partial_n\left(\frac{1}{|r'-r|}\right) =&  - \frac{A(x' - x)}{|n|\cdot|r' - r|^3}-\frac{B(y' - y)}{|n|\cdot |r' - r|^3} - \frac{C(z' - z)}{|n|\cdot|r' - r|^3}.
+	\end{eqnarray} 
+	Значения нормальной и временной производных от волны запаздывания можно вычислить численно, заменив производную на её разностный аналог, либо аналитически, если функция волны запаздывания также задана аналитически.
+	
+	Например, пусть волна на отражающей поверхности задана функцией
+	\begin{equation}
+		P(r,t) = \left( 1-2\,{\pi}^{2}{t}^{2} \right) {{\rm e}^{-{\pi}^{2}{t}^{2}}},
+	\end{equation}
+	тогда волна запаздывания будет иметь вид
+	\begin{equation}
+		\tilde{P}(r,t) = \left( 1-2\,{\pi}^{2} \left( t-{\frac {\sqrt {{x}^{2}+{y}^{2}+{z}^{2}
+			}}{c}} \right) ^{2} \right) {{\rm e}^{-{\pi}^{2} \left( t-{\frac {
+						\sqrt {{x}^{2}+{y}^{2}+{z}^{2}}}{c}} \right) ^{2}}}.
+		\label{eq:latewavrick}
+	\end{equation}
+	Для удобства, обозначим $|r| = \sqrt{x^2+y^2+z^2}$. Производная по времени выражается как
+	\begin{align}
+		\diff{\tilde{P}(r,t)}{t}=&-4\,{\pi}^{2} \left( t-{\frac { \left| r \right| }{c}} \right) {
+			{\rm e}^{-{\pi}^{2} \left( t-{\frac { \left| r \right| }{c}} \right) ^
+				{2}}}\nonumber\\
+		&-2\, \left( 1-2\,{\pi}^{2} \left( t-{\frac { \left| r \right| }{c
+		}} \right) ^{2} \right) {\pi}^{2} \left( t-{\frac { \left| r \right| 
+			}{c}} \right) {{\rm e}^{-{\pi}^{2} \left( t-{\frac { \left| r \right| 
+					}{c}} \right) ^{2}}},
+	\end{align}
+	а производную по пространственной переменной $x$ можно вычислить следующим образом:
+	\begin{align}
+		\diff{\tilde{P}(r,t)}{x} = -4\,{\frac { \left( -2\, \left| r \right| {\pi}^{2}ct+ \left( {c}^{2}{
+					t}^{2}+|r|^2 \right) {\pi}^{2}-3/2\,{c}^{2} \right) 
+				\left( tc- \left| r \right|  \right) x{\pi}^{2}}{|r|{c}^{4}}{{\rm e}^{-{\frac {{\pi}^{2} \left( -tc+ \left| r
+							\right|  \right) ^{2}}{{c}^{2}}}}}}.
+		\label{eq:latewavrickdx}
+	\end{align}
+	
+	Так как функция \ref{eq:latewavrick} симметрична относительно пространственных переменных, то частные производные $\diff{\tilde{P}(r,t)}{y}$ и $\diff{\tilde{P}(r,t)}{z}$
+	будут иметь вид, аналогичный выражению \ref{eq:latewavrickdx}.  
+	Значение производной вдоль внешней нормали плоскости $B$ можно вычислить как 
+	\begin{equation}
+		\diff{\tilde{P}(r,t)}{n} = \frac{A}{|n|} \diff{\tilde{P}(r,t)}{x} +
+		\frac{B}{|n|} \diff{\tilde{P}(r,t)}{y} +
+		\frac{C}{|n|} \diff{\tilde{P}(r,t)}{z},
+	\end{equation}
+	где $|n| = \sqrt{A^2+B^2+C^2}$.
+	%Подставим значения производных в выражение \ref{eq:kirgreen3d}
+	%\begin{equation}
+	%	P(r',t') = \frac{1}{4\pi} \iint\limits_B
+	%	\left[\frac{z'-z}{|r'-r|^2}\left(\frac{1}{c}\frac{\partial\tilde{P}(r',t')}{\partial t'}+\frac{\tilde{P}(r',t')}{|r'-r|}\right) - \frac{1}{|r'-r|}\frac{\partial\tilde{P}(r',t')}{\partial z}\right]\,ds
+	%\end{equation}
+	
+\end{comment}

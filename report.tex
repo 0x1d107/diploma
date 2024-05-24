@@ -1,4 +1,4 @@
-% !TeX spellcheck = russian-aot
+% !TeX spellcheck = ru_RU-Russian
 \documentclass[a4paper, fontsize=14pt]{article} 
 
 %\documentclass[russian,utf8]{eskdtext} 
@@ -13,8 +13,8 @@
 \newcommand{\gradop}{\operatorname{grad}}
 
 \begin{document} 
-	%\includepdf[pages=1-3]{cover.pdf} \newpage \tableofcontents
-	%\newpage 	
+	\includepdf[pages=1-9]{cover_pract.pdf}
+	\newpage 	
 	\tableofcontents
 	\newpage
 	\section*{Введение} 
@@ -113,8 +113,8 @@
 	Где $\delta(x)$ -- это дельта-функция Дирака.
 	\begin{equation}
 		\delta(x)=\begin{cases}
-			\infty,&x=0\\
-			0,&x\neq 0
+			\infty,&x=0,\\
+			0,&x\neq 0.
 		\end{cases}
 		\label{eq:deltadef}
 	\end{equation}	
@@ -123,7 +123,7 @@
 	
 	Пусть источник колебаний находится в начале координат и время импульса $t' = 0$. 
 	
-	Так как правая часть уравнения равна 0 везде, кроме точки $O(0,0,0)$, поэтому 
+	Так как правая часть уравнения равна 0 везде, кроме точки $O(0,0,0)$ в начальный момент времени, поэтому 
 	$G$ удовлетворяет уравнению \eqref{eq:uwav} всюду, кроме начала координат
 	\begin{equation}
 		\frac{\partial^2 G}{\partial x^2} + \frac{\partial^2 G}{\partial y^2} +
@@ -163,7 +163,7 @@
 		\label{eq:fwav}
 \end{equation}
 	%DONE RK Откуда следует это равенство?
-Для дальнейшего вывода покажем справедливость следующего равенства \cite{morse}
+Для дальнейшего вывода покажем справедливость следующего равенства \cite{morse}:
 	\begin{equation}
 		\Delta\left(\frac{1}{r}\right) = -4\pi \delta(x)\delta(y)\delta(z).
 		\label{eq:del1r}
@@ -211,14 +211,14 @@
 	
 	Для волнового уравнения с произвольной правой частью $F(x,y,z,t)$ можно
 	записать формулу представления решения 
-	в аналитическом виде при помощи функции Грина, введя вектор $\bar{r} = (x,y,z)$: \cite{vladimirov}
+	в аналитическом виде при помощи функции Грина, введя вектор $\bar{r} = (x,y,z)$ \cite{vladimirov}:
 	
 	% TODO RK
 	
 	
 	\begin{equation}
 		P(\bar{r}',t')=\iiint\limits_{D_1} \int\limits_{0}^{+\infty}
-		F(\bar{r},t) G(\bar{r}' - \bar{r},t'- t)\,dt\,dv
+		F(\bar{r},t) G(\bar{r}' - \bar{r},t'- t)\,dt\,dv.
 		\label{eq:wavfgconv}
 	\end{equation}
 	
@@ -227,11 +227,11 @@
 	Тогда правую часть волнового уравнения записать как 
 	\begin{equation}
 		\Delta [F*G] -\frac{1}{c^2} \diff[2]{}{t} [F*G] = F*\left[\Delta G -\frac{1}{c^2} \diff[2]{}{t} 
-		G\right] 
+		G\right].
 	\end{equation}
 	По определению функция Грина является решением волнового уравнения с трёхмерной дельта-функцией в правой части, следовательно
 	\begin{equation*}
-		F*\left[\Delta G -\frac{1}{c^2} \diff[2]{}{t} G\right] = -F * \delta
+		F*\left[\Delta G -\frac{1}{c^2} \diff[2]{}{t} G\right] = -F * \delta.
 	\end{equation*}
 	По свойству дельта-функции 
 	\begin{equation}
@@ -260,10 +260,10 @@
 		\label{eq:uwav2}
 	\end{equation}
 	
-	 Положим, что граница $S$ области $D$ является кусочно-гладкой. Так как область $D$ ограничена и имеет кусочно-гладкую границу, тогда по
-	теореме Остроградского-Гаусса справедливо соотношение
+	 Положим, что граница $S$ области $D$ является кусочно-гладкой. Так как область $D$ ограничена и имеет кусочно-гладкую границу, тогда является справедливым по
+	теореме Остроградского-Гаусса:
 	\begin{equation}
-		\iiint\limits_D \divop F \, dv = \iint\limits_S F \cdot n \, ds 
+		\iiint\limits_D \divop F \, dv = \iint\limits_S F \cdot n \, ds.
 		\label{eq:vgauss}
 	\end{equation}
 	Для любых гладких функций $u$ и $v$ справедливо соотношение 
@@ -276,39 +276,39 @@
 		\divop (v \gradop u) = v\Delta u + \gradop v \cdot \gradop u.
 		\label{eq:divgrad2}
 	\end{equation}
-	Путём вычитания из уравнения \eqref{eq:divgrad1} уравнения \eqref{eq:divgrad2} получим 
+	Путём вычитания из уравнения \eqref{eq:divgrad1} уравнения \eqref{eq:divgrad2} получим равенство:
 	\begin{equation}
-		\divop (u \gradop v - v \gradop u)  = u\Delta v - v \Delta u
+		\divop (u \gradop v - v \gradop u)  = u\Delta v - v \Delta u.
 		\label{eq:divgraddiff}
 	\end{equation}
 	Пусть векторы $r = (x,y,z) \in S$ и $r' = (x',y',z') \in D$ -- это радиус-векторы точек на поверхности $S$ и области $D$ соответственно.
 	Положим 
 	% DONE RK Надо пояснить, каким уравнениям удовлетворяют P и G.
-	\begin{eqnarray}
+	\begin{align}
 		u(x,y,z,t) =& P(x,y,z,t),\label{eq:subsu}\\
 		v(x,y,z,t) = &G(x',y',z',t'|x,y,z,t),\label{eq:subsv}
-	\end{eqnarray}
+	\end{align}
 	где волновое поле $P$ удовлетворяет уравнению \eqref{eq:uwav2}, 
 	а функция Грина $G$ удовлетворяет равенству 
 	\begin{equation}
 		\diff[2]{G}{x}  + \diff[2]{G}{y} +
 		\diff[2]{G}{z}  - \frac{1}{c^2} \frac{\partial^2 G}{\partial
-			t^2} = \delta(x-x')\delta(y-y')\delta(z-z')\delta(t-t')
+			t^2} = \delta(x-x')\delta(y-y')\delta(z-z')\delta(t-t'),
 		\label{eq:wavgdel}
 	\end{equation}
 	тогда из \eqref{eq:uwav2} и \eqref{eq:wavgdel} соответственно можно выразить 
 	% DONE  Ввести вектора r и r'
 	% DONE ввести обозначения для случаев, где функция без аргументов
-\begin{eqnarray}
+\begin{align}
 	% DONE RK Откуда это уравнение?
 	\Delta u =& \frac{1}{c^2} \diff[2]{P}{t},\label{eq:subsdu}\\
 	\Delta v = &\delta (r' - r) \delta(t' - t) + \frac{1}{c^2} \diff [2]{G(r' -r,t'-t)}{t},\label{eq:subsdv}
-\end{eqnarray}
+\end{align}
 где $r=(x,y,z)$. Для краткости обозначим
-	\begin{align*}
+	\begin{align}
 		P =& P(r,t) \\
 		G =& G(r',t'|r,t)
-	\end{align*}
+	\end{align}
 	Проинтегрируем уравнение \eqref{eq:divgraddiff} по времени
 	\begin{equation}
 		\divop \int\limits_{-\infty}^{+\infty} [P \gradop G - G \gradop P ]\, dt=  P\delta(r-r') +\frac{1}{c^2}\int\limits_{-\infty}^{+\infty}\left[P\diff[2]{G}{t} - G \diff[2]{P}{t}\right]\,dt.
@@ -355,10 +355,11 @@
 	производной) на границе области.
 	
 	Подставим в формулу \eqref{eq:kir} функцию Грина \eqref{eq:green3d} для однородного трёхмерного пространства:
-	\begin{equation}
-		P\left(r',t'\right)=\frac{1}{4\pi}\iint_{\partial D}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{|r'-r|}\right)+\frac{1}{c |r'-r|}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D,
+	\begin{multline}
+		P\left(r',t'\right)=\frac{1}{4\pi}\iint_{\partial D}^{}\left\{\frac{1}{|r'-r|}\left[\frac{\partial P}{\partial n}\right]-\left[P\right]\frac{\partial}{\partial n}\left(\frac{1}{|r'-r|}\right)+ \right. \\ 
+		+\left. \frac{1}{c |r'-r|}\left[\frac{\partial P}{\partial t}\right]\frac{d r'}{d n}\right\}d D,
 		\label{eq:kirg0}
-	\end{equation}
+	\end{multline}
 		где квадратные скобки обозначают значения функций для $t=t'-\frac{|r'-r|}{c}$.
 	
 	\begin{figure}[h]
@@ -500,16 +501,16 @@ $$
 	\subsection{Уравнение Гельмгольца и коэффициент отражения}
 	Для дальнейших рассуждений будет удобно перейти от временной области в частотную. Представим поле $P(r,t)$ как суперпозицию полей в частотной области $p(r,\omega)$:
 	\begin{equation}
-		P(r,t) =  \int_{-\infty}^{\infty} p(r,\omega) e^{i\omega t}\, d\omega
+		P(r,t) =  \int_{-\infty}^{\infty} p(r,\omega) e^{i\omega t}\, d\omega.
 	\end{equation}
 	Применим преобразование Фурье к волновому уравнению \eqref{eq:wav}:
 	\begin{equation}
-		\int_{-\infty}^{\infty} \left[ \nabla^2 P(r,t) + \frac{1}{c^2}\diff[2]{P(r,t)}{t}\right] e^{-i\omega t} \, dt = - \int_{-\infty}^{\infty}   F(r,t) e^{-i\omega t} \, dt
+		\int_{-\infty}^{\infty} \left[ \nabla^2 P(r,t) + \frac{1}{c^2}\diff[2]{P(r,t)}{t}\right] e^{-i\omega t} \, dt = - \int_{-\infty}^{\infty}   F(r,t) e^{-i\omega t} \, dt.
 	\end{equation}
 	По свойствам преобразования Фурье производная по времени переходит в частотной области в умножение на коэффициент 
 	$i\omega$. В результате получаем уравнение, называемое {\it уравнением Гельмгольца}:
 	\begin{equation}
-		\nabla^2 p(r,\omega) + \frac{\omega^2}{c^2}p(r,\omega) = - f(r,\omega)
+		\nabla^2 p(r,\omega) + \frac{\omega^2}{c^2}p(r,\omega) = - f(r,\omega).
 		\label{eq:helmholtz}
 	\end{equation}
 	\begin{comment}
@@ -538,7 +539,7 @@ $$
 	Плоской волной называется решение волнового уравнения \eqref{eq:uwav2} вида $$P(\xi) := P\left(\frac{n_xx+n_yy+n_zz}{c}-t\right),$$ где $n(n_x,n_y,n_z)$ -- нормаль к фронту волны.
 	При помощи преобразования Фурье выразим плоскую как интеграл по гармоническим колебаниям частоты $\omega$:
 	\begin{equation}
-		P(\xi) = \int \limits_{-\infty}^{\infty} p(r,\omega) e^{i\omega \xi}\, d\xi 
+		P(\xi) = \int \limits_{-\infty}^{\infty} p(r,\omega) e^{i\omega \xi}\, d\xi.
 	\end{equation}
 
 	Пусть на плоскость падает плоская гармоническая волна $e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}$.
@@ -559,7 +560,7 @@ $$
 		\nabla^2 p(r,\omega) + \frac{\omega^2}{c_2^2}p(r,\omega) = 0.
 	\end{equation}
 	
-	При отражении акустической волны от границы на поверхности раздела должны быть равны давления и нормальные скорости в обеих средах. \cite{landavshic}
+	При отражении акустической волны от границы на поверхности раздела должны быть равны давления и нормальные скорости в обеих средах \cite{landavshic}.
 	
 	\begin{gather}
 		z=0,\label{eq:rc1}\\
@@ -579,36 +580,36 @@ $$
 	\begin{equation}
 		(1+\Lambda)= W e^{i\frac{\omega}{c_2}x\sin \theta_2  - ix\frac{\omega}{c_1}\sin \theta}
 	\end{equation}
-	Так как левая часть последнего равенства не зависит от $x$, то значит  коэффициент перед  $x$ в правой части равен нулю.
+	Так как левая часть последнего равенства не зависит от $x$, то значит  коэффициент перед  $x$ в правой части равен нулю:
 	\begin{equation}
-		\frac{\sin \theta_2}{c_2} = \frac{\sin \theta}{c_1} 
+		\frac{\sin \theta_2}{c_2} = \frac{\sin \theta}{c_1}.
 	\label{eq:snell}
 	\end{equation}
 	Последнее равенство называется законом Снелля.
 	
-	Для гармонической волны в однородной среде плотностью $\rho$ колебательная скорость в звуковой волне записывается \cite{landavshic}
+	Для гармонической волны в однородной среде плотностью $\rho$ колебательная скорость в звуковой волне записывается \cite{landavshic}:
 	\begin{equation}
-		v = \frac{\gradop p}{i\omega \rho}
+		v = \frac{\gradop p}{i\omega \rho}.
 	\end{equation}
 	
 	Введём понятие акустического импеданса:
 	\begin{equation}
-		Z = -\frac{p}{v_z}
+		Z = -\frac{p}{v_z}.
 	\end{equation}
-	Вычислим импеданс в области $D_1$
+	Вычислим импеданс в области $D_1$:
 	\begin{equation}
-		Z_1 = -\frac{i\omega \rho_1 c_1 (e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)})}{i\omega(-e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)}) \cos \theta }
+		Z_1 = -\frac{i\omega \rho_1 c_1 (e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)})}{i\omega(-e^{i\frac{\omega}{c_1}(x\sin \theta - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(x\sin \theta + z\cos \theta)}) \cos \theta },
 	\end{equation}
 	\begin{equation}
-		Z_1 = -\frac{ \rho_1 c_1 (e^{i\frac{\omega}{c_1}(- z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}( z\cos \theta)})}{(-e^{i\frac{\omega}{c_1}( - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(z\cos \theta)}) \cos \theta }
+		Z_1 = -\frac{ \rho_1 c_1 (e^{i\frac{\omega}{c_1}(- z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}( z\cos \theta)})}{(-e^{i\frac{\omega}{c_1}( - z\cos \theta)}+\Lambda e^{i\frac{\omega}{c_1}(z\cos \theta)}) \cos \theta }.
 		\label{eq:impz1}
 	\end{equation} 
-	Аналогично для области $D_2$
+	Аналогично для области $D_2$:
 	\begin{equation}
-		Z_2 = \frac{i\omega c_2 \rho_2 W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}}{i\omega W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}\cos \theta_2}
+		Z_2 = \frac{i\omega c_2 \rho_2 W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}}{i\omega W e^{i\frac{\omega}{c_2}(x\sin \theta_2 - z\cos \theta_2)}\cos \theta_2},
 	\end{equation}
 	\begin{equation}
-		Z_2 = \frac{ c_2 \rho_2 }{ \cos \theta_2}
+		Z_2 = \frac{ c_2 \rho_2 }{ \cos \theta_2}.
 	\end{equation}
 	Из условий \eqref{eq:rc2} и \eqref{eq:rc3} можно сделать вывод, что импеданс на поверхности раздела сред также является непрерывной величиной.
 	\begin{equation}
@@ -626,9 +627,9 @@ $$
 		\Lambda =\frac{Z_2-Z}{Z_2+Z}.
 		\label{eq:lambdaZ}
 	\end{equation}
-	Подставим в выражение \eqref{eq:lambdaZ} значения для импедансов $Z_2$ и $Z$.
+	Подставим в выражение \eqref{eq:lambdaZ} значения для импедансов $Z_2$ и $Z$:
 	\begin{equation}
-		\Lambda = \frac{c_2 \rho_2 \cos \theta - c_1 \rho_1 \cos \theta_2}{c_2 \rho_2 \cos \theta + c_1 \rho_1 \cos \theta_2} 
+		\Lambda = \frac{c_2 \rho_2 \cos \theta - c_1 \rho_1 \cos \theta_2}{c_2 \rho_2 \cos \theta + c_1 \rho_1 \cos \theta_2}.
 		\label{eq:lambda}
 	\end{equation}
 	% DONE ссылку на нормальную литературу.
@@ -639,12 +640,12 @@ $$
 	где угол падения $\theta=\psi_1$.
 	Для вычисления значения косинусов углов $\psi_1$, $\psi_2$ можно воспользоваться скалярным произведением:
 	\begin{gather}
-		\cos \psi_2=\frac{(r'-r)\cdot n }{|r'-r|} \\
-		\cos \psi_1 = \frac{(r-r_0)\cdot n }{|r-r_0|}  \label{eq:cosincident}
+		\cos \psi_2=\frac{(r'-r)\cdot n }{|r'-r|}, \\
+		\cos \psi_1 = \frac{(r-r_0)\cdot n }{|r-r_0|}.  \label{eq:cosincident}
 	\end{gather}
 	Косинус угла преломления $\theta_2$ можно выразить из закона Снелля \eqref{eq:snell}:
 	\begin{equation}
-		\cos \theta_2 =  \sqrt{1-\frac{c_2^2}{c_1^2}(1-\cos^2 \psi_1)}
+		\cos \theta_2 =  \sqrt{1-\frac{c_2^2}{c_1^2}(1-\cos^2 \psi_1)}.
 	\end{equation}
 
 
@@ -769,15 +770,15 @@ $$
 	  
 	Обозначим значение, обратное по величине скорости волны, как медленность 
 	\begin{gather*}
-		s = \frac{1}{c} \\
-		s_1 = \frac{1}{c_1} \\
-		s_2 = \frac{1}{c_2}
+		s = \frac{1}{c}, \\
+		s_1 = \frac{1}{c_1}, \\
+		s_2 = \frac{1}{c_2}.
 	\end{gather*}
 	Таким образом функция $a(r)$ является квадратом нормированной аномальной медленности:
 	$$
 	a(r) = \frac{s^2 - s_1^2}{s_1^2} = \frac{\Delta s^2}{s_1^2}
 	$$
-	Падающее волновое поле удовлетворяет волновому уравнению в области $D_1$:
+	Падающее волновое поле удовлетворяет волновому уравнению в области $D_1$ при $t>0$:
 	\begin{equation}
 		\nabla^2 P_0 - \frac{1}{c_1^2}\diff[2]{P_0}{t} = 0.
 		\label{eq:wavp0}
@@ -852,7 +853,7 @@ $$
 		 \left.W\right|_{z=0} = P(r,t).
 	\end{gather*}
 	
-	Рассмотрим гипотетическую волну, двигающуюся вверх к поверхности наблюдения с направлением, которое в определённый момент времени (например, при $t = 0$) совпадает с одной из отражающих границ. Далее, очевидно, что волна будет распространяться вдоль тех же лучей, что и реальное отражённое поле <<нулевого удаления>>, которое было зарегистрировано совмещёнными источниками и приёмниками, для времени $t>0$. Это связано с тем, что лучи первичной и отражённой волн должны совпадать, если положения источников и приёмников совпадают. Это возможно только в том случае, если соответствующая траектория луча нормальна к отражающей границе. Таким образом, как и предполагаемая волна, которую мы называем восходящей волной Клербо, и реальное отражённое волновое поле, зарегистрированное совмещёнными источниками и приёмниками, они должны распространяться вдоль одних и тех же лучевых путей. Тем не менее волне Клербо потребуется пятьдесят минут, чтобы достичь определённой точки на поверхности наблюдения, куда придёт реальная отражённая волна, которая должна пройти это расстояние дважды. Тем не менее обе волны достигнут любой точки поверхности наблюдения одновременно, если предположить, что скорость волны Клербо в среде в два раза меньше, чем скорость реальной волны. \cite{zhdanov2007}
+	Рассмотрим гипотетическую волну, двигающуюся вверх к поверхности наблюдения с направлением, которое в определённый момент времени (например, при $t = 0$) совпадает с одной из отражающих границ. Далее, очевидно, что волна будет распространяться вдоль тех же лучей, что и реальное отражённое поле <<нулевого удаления>>, которое было зарегистрировано совмещёнными источниками и приёмниками, для времени $t>0$. Это связано с тем, что лучи первичной и отражённой волн должны совпадать, если положения источников и приёмников совпадают. Это возможно только в том случае, если соответствующая траектория луча нормальна к отражающей границе. Таким образом, как и предполагаемая волна, которую мы называем восходящей волной Клербо, и реальное отражённое волновое поле, зарегистрированное совмещёнными источниками и приёмниками, они должны распространяться вдоль одних и тех же лучевых путей. Тем не менее волне Клербо потребуется пятьдесят минут, чтобы достичь определённой точки на поверхности наблюдения, куда придёт реальная отражённая волна, которая должна пройти это расстояние дважды. Тем не менее обе волны достигнут любой точки поверхности наблюдения одновременно, если предположить, что скорость волны Клербо в среде в два раза меньше, чем скорость реальной волны \cite{zhdanov2007}.
 
 	\subsection{Интеграл Рэлея}
 	Для восстановления волн, которые распространяются по направлению к поверхности наблюдения, в качестве фундаментального решения нужно использовать функцию, сопряжённую к функции Грина волнового уравнения.
@@ -868,10 +869,10 @@ $$
 	\iint_{S}\int_{-\infty}^{\infty}{\widetilde{G}}\left(r'',t^{\prime}|r,t\right){\frac{\partial}{\partial n}}P(r,t)d t\,d s = \iint_{S}\int_{-\infty}^{\infty}P(r,t){\frac{\partial}{\partial n}}{\widetilde{G}}\left(r'',t^{\prime}|r,t\right)\,d t\,d s.
 	\end{equation}
 	Пусть точки $r'$ и $r''$ расположены симметрично относительно $S$. Тогда справедливы для любой точки $r\in S$
-	\begin{eqnarray}
-		\widetilde{{{G}}}\left({r}^{\prime\prime},t^{\prime}|{r},t\right)~~=~~\widetilde{G}\left({r}^{\prime},t^{\prime}|{r},t\right), \\
-		\frac{\partial}{\partial n}\widetilde G\left({ r}^{\prime\prime},t^{\prime}|{ r},t\right)~=~-\frac{\partial}{\partial n}\widetilde G\left({ r}^{\prime},t^{\prime}|{ r},t\right).
-	\end{eqnarray}
+	\begin{align}
+		\widetilde{{{G}}}\left({r}^{\prime\prime},t^{\prime}|{r},t\right)~~&=~~\widetilde{G}\left({r}^{\prime},t^{\prime}|{r},t\right), \\
+		\frac{\partial}{\partial n}\widetilde G\left({ r}^{\prime\prime},t^{\prime}|{ r},t\right)~&=~-\frac{\partial}{\partial n}\widetilde G\left({ r}^{\prime},t^{\prime}|{ r},t\right).
+	\end{align}
 	В результате получается тождество для любого ${ r}^{\prime}\in V$.
 	\begin{equation}
 	\iint_{S}\int_{-\infty}^{\infty}\widetilde{G}\left({r}^{\prime},t^{\prime}|{r},t\right)\frac{\partial}{\partial n}P({r},t)d t\,d s = -\iint_{S}\int_{-\infty}^{\infty}P({ r},t){\frac{\partial}{\partial n}}\widetilde{G}\left({ r}^{\prime},t^{\prime}|{ r},t\right)\,d t\,d s.
@@ -1094,7 +1095,7 @@ P({ r}^{\prime},t^{\prime})=2\iint_{S}\int_{-\infty}^{\infty}P({ r},t)\frac{\par
 		\label{fig:mig_tilt}
 	\end{figure}
 	На рисунке \ref{fig:mig_tilt} показано сейсмическое изображение среды, полученное при помощи преобразования сейсмической миграции. 
-	На графике ось $x$ направлена вправо, ось $z$ направлена вниз. На изображении видно, что волны, порождённые источниками на поверхности наблюдения, отражаются от наклонной плоскости.  По данному сейсмическому изображению можно определить коэффициент наклона плоскости вдоль оси $x$: $m = \frac{11-5}{45-5} = 0.15$, что соответствует уравнению \eqref{eq:mig_mod}. 
+	На графике ось $x$ направлена вправо, ось $z$ направлена вниз. На изображении видно, что волны, порождённые источниками на поверхности наблюдения, отражаются от наклонной плоскости.  По данному сейсмическому изображению можно определить коэффициент наклона плоскости вдоль оси $x$: $$m = \frac{11-5}{45-5}.$$ Значение $m=0.15$ соответствует уравнению \eqref{eq:mig_mod}. 
 	
 	%TODO: 
 	
@@ -1109,6 +1110,9 @@ P({ r}^{\prime},t^{\prime})=2\iint_{S}\int_{-\infty}^{\infty}P({ r},t)\frac{\par
 	  отражения.
 	
 	Была выполнена численная программная реализация модели и продемонстрирована её работоспособность на примерах решения задач моделирования отражённого волнового поля от слоистой среды для случаев: одной горизонтальной границы, нескольких горизонтальных границ, плоской наклонной границы, сферической границы.
+	
+	Далее, была рассмотрена задача нахождения сейсмического изображения среды по значениям поля на поверхности наблюдения. Записано решение задачи обратного продолжения волны, восходящей к поверхности наблюдения. 
+	Была выполнена численная программная реализация решения задачи и продемонстрирована её работоспособность на примере нахождения  сейсмического изображения горизонтально-слоистой среды и среды с плоской наклонной границей. 
 	
 	%TODO
 	%	Была выполнена численная реализация модели и продемонстрирована её работоспособность на примерах 
@@ -1129,6 +1133,10 @@ P({ r}^{\prime},t^{\prime})=2\iint_{S}\int_{-\infty}^{\infty}P({ r},t)\frac{\par
 	\printbibliography
 	
 	\newpage
+	\section*{Приложение А}
+	\addcontentsline{toc}{section}{Приложение А}
+	\subsection*{Листинг программы}
+	\lstinputlisting[language=C++]{../src/klayers/klayers.cpp}
 	
 	%\includepdf[pages=11]{cover.pdf}
 	
