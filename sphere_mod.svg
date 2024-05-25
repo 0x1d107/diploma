@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="76.521248mm"
+   height="46.290276mm"
+   viewBox="0 0 76.521248 46.290276"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
+   sodipodi:docname="sphere_mod.svg"
+   inkscape:export-filename="sphere_mod.pdf"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="2.025849"
+     inkscape:cx="170.79259"
+     inkscape:cy="138.70728"
+     inkscape:window-width="1920"
+     inkscape:window-height="1008"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1">
+    <rect
+       x="364.37463"
+       y="395.87955"
+       width="16.77923"
+       height="13.971766"
+       id="rect4" />
+    <marker
+       style="overflow:visible"
+       id="Triangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-54.208444,-76.916352)">
+    <path
+       style="fill:#000000;stroke:#000000;stroke-width:0.163"
+       d="M 54.208444,82.029106 H 130.72969"
+       id="path1" />
+    <ellipse
+       style="fill:none;stroke:#000000;stroke-width:0.141805"
+       id="path2"
+       cx="91.369781"
+       cy="111.20599"
+       rx="11.764181"
+       ry="11.929732" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.23624;stroke-dasharray:none;marker-end:url(#Triangle)"
+       d="m 91.966079,111.2213 0.202544,-10.97508"
+       id="path3"
+       sodipodi:nodetypes="cc" />
+    <ellipse
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.138074"
+       id="path4"
+       cx="90.802711"
+       cy="82.024979"
+       rx="1.0103568"
+       ry="0.91418952" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.42094592,0,0,0.42094592,-64.423058,-63.181327)"
+       id="text4"
+       style="font-size:7.43758px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Normal';white-space:pre;shape-inside:url(#rect4);fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.869291;stroke-dasharray:none"><tspan
+         x="364.375"
+         y="402.64618"
+         id="tspan3">R
+</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:2.94889px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Normal';fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.344661;stroke-dasharray:none"
+       x="90.040169"
+       y="79.223679"
+       id="text5"><tspan
+         sodipodi:role="line"
+         id="tspan5"
+         style="stroke-width:0.344661"
+         x="90.040169"
+         y="79.223679">S</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.46642px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Normal';baseline-shift:baseline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0664397;stroke-dasharray:none"
+       x="83.581589"
+       y="116.09528"
+       id="text6"><tspan
+         sodipodi:role="line"
+         id="tspan6"
+         style="baseline-shift:baseline;stroke-width:0.0664397"
+         x="83.581589"
+         y="116.09528">D<tspan
+   style="font-size:2.25317px;baseline-shift:sub;stroke-width:0.0664397"
+   id="tspan7">1</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:3.46642px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans, Normal';baseline-shift:baseline;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.0664397;stroke-dasharray:none"
+       x="125.92281"
+       y="95.298653"
+       id="text6-4"><tspan
+         sodipodi:role="line"
+         style="baseline-shift:baseline;stroke-width:0.0664397"
+         x="125.92281"
+         y="95.298653"
+         id="tspan2">D</tspan></text>
+  </g>
+</svg>
