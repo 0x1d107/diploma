@@ -38,6 +38,11 @@
 
 \usepackage[style=gost-numeric,language=auto,sorting=none]{biblatex}
 
+
+% Абзацный отступ
+
+\setlength{\parindent}{12.5mm}
+
 % ГРАФИКИ
 \usepackage{tikz}
 
@@ -97,6 +102,37 @@
 \renewcommand{\Re}{\operatorname{Re}}
 \renewcommand{\Im}{\operatorname{Im}}
 
+% Настройка отображения ключевых слов
+\newcommand{\keywords}[1]{\MakeUppercase{#1}}
+
+% Последняя страница для подсчёта
+\usepackage{lastpage}
+% Подсчёт рисунков, таблиц
+\usepackage[figure,table]{totalcount}
+% Подсчёт источников
+\usepackage{totcount,assoccnt}
+\newtotcounter{citenum}
+\AtEveryBibitem{\stepcounter{citenum}}
+% Подсчёт приложений
+\newcounter{appendixsections}
+\regtotcounter{appendixsections}
+\DeclareAssociatedCounters{subsection}{appendixsections}
+\preto\appendix{
+	\setcounter{appendixsections}{0}
+	\renewcommand\thesection{}
+}
+
+\preto\section{
+	\stepcounter{appendixsections}
+}
+\newcommand{\printtotal}{\pageref{LastPage} c., \totalfigures \ рис., \totaltables \ табл., \total{citenum} источн., \total{appendixsections} прил.}
+
+\newcommand{\appsect}[1]{
+\section*{Приложение \Alph{appendixsections}}
+\addcontentsline{toc}{section}{Приложение \Alph{appendixsections}}
+\subsection*{#1}
+}
+
 % Двойная нумерация уравнений в каждом параграфе
 \usepackage{chngcntr}
 \counterwithin{equation}{section}
@@ -105,3 +141,5 @@
 % Не показывать номера у уравнений без ссылок
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs} 
+
+
