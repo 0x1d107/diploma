@@ -13,35 +13,62 @@
 \RequirePackage[labelsep=endash]{caption}
 \RequirePackage{subcaption}
 \linespread{1}
+\captionsetup[figure]{name={Рисунок}}
 
 %НАСТРОЙКИ ОГЛАВЛЕНИЯ
 \renewcommand{\cftsecaftersnum}{.} %точки после номеров разделов и подразделов в оглавлении
 \renewcommand{\cftsubsecaftersnum}{.}
 \renewcommand{\cftsecfont}{\normalfont} %разделы в оглавлении пишутся обычным (не жирным) шрифтом
+\setlength{\cftsecindent}{0pt} % Отступ для разделов
+\setlength{\cftsubsecindent}{1.5em} % Отступ для подразделов
+
 \renewcommand{\cftsecpagefont}{\normalfont} %соответствующие им страницы тоже
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} %расставляем точки между названиями разделов и их страницами
 \addto\captionsrussian{\renewcommand\contentsname{СОДЕРЖАНИЕ}} %хотим, чтобы слово "Содержание" писалось капсом
+\addto\captionsrussian{\renewcommand{\refname}{Список использованных источников и литературы}} % Теперь это так называется
 \renewcommand{\cfttoctitlefont}{\hfil\bfseries} %слово СОДЕРЖАНИЕ по центру жирным
 \renewcommand{\cftaftertoctitle}{\hfill}
 \setlength{\cftsubsecindent}{0pt} %убираем отступ перед номерами подразделов, всё содержание выровнено по своему левому краю
 \setlength{\cftbeforesecskip}{0pt} %убираем большой отступ перед новым разделом
 
 %НАСТРОЙКИ РУБРИКАЦИИ
-\titleformat*{\section}{\center\bf\MakeUppercase} %названия разделов и подразделов по середине жирным шрифтом; названия разделов, к тому же -- капсом
-\titleformat*{\subsection}{\center\bf}
+\titleformat{\section}
+{\bfseries}{\hspace{1.2cm}\thesection}{1em}{}  % Добавляем отступ перед номером
+
+\titleformat{\subsection}
+{\bfseries}{\hspace{1.2cm}\thesubsection}{1em}{}  % Аналогично для подразделов
+
+\setlength{\cftsecindent}{0pt} % Отступ для разделов
+\setlength{\cftsubsecindent}{1.5em} % Отступ для подразделов
+
+% Формат для ненумерованных разделов
+\titleformat{name=\section,numberless}
+{\centering\bfseries\MakeUppercase}{}{0em}{}
+
+\titleformat{name=\subsection,numberless}
+{\centering\bfseries\MakeUppercase}{}{0em}{}
+\titleformat*{\subsection}{\bf}
 \titlelabel{\thetitle.\quad} %название раздела и его номер отделены точкой
 
 %НАСТРОЙКИ БИБЛИОГРАФИИ
 \makeatletter
-\renewcommand{\@biblabel}[1]{#1.} %хотим, чтобы в списке литературы номера источников писались в формате "No. <...>", а не "[No] <...>"
+\renewcommand{\@biblabel}[1]{#1 } %хотим, чтобы в списке литературы номера источников писались в формате "No. <...>", а не "[No] <...>"
+
 \makeatother
 
 \usepackage[style=gost-numeric,language=auto,sorting=none]{biblatex}
 
 
+\DefineBibliographyStrings{russian}{
+	references = {Список использованных источников и литературы},
+}
 % Абзацный отступ
 
 \setlength{\parindent}{12.5mm}
+
+% Полуторный межстрочный интервал
+\linespread{1.3}
+
 
 % ГРАФИКИ
 \usepackage{tikz}
@@ -64,6 +91,7 @@
 }
 
 % Руссификация algorithmicx
+\floatname{algorithm}{Алгоритм}
 \algrenewcommand\algorithmicwhile{\textbf{До тех пока}}
 \algrenewcommand\algorithmicdo{\textbf{выполнять}}
 \algrenewcommand\algorithmicrepeat{\textbf{Повторять}}
@@ -136,10 +164,18 @@
 % Двойная нумерация уравнений в каждом параграфе
 \usepackage{chngcntr}
 \counterwithin{equation}{section}
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
 % Многострочные комментарии
 \usepackage{comment}
 % Не показывать номера у уравнений без ссылок
 \usepackage{mathtools}
 \mathtoolsset{showonlyrefs} 
+
+% Вложенные списки с нумерацией вида 1.1
+\usepackage{enumitem}
+\setlist[enumerate]{label*=\arabic*.}
+
 
 
